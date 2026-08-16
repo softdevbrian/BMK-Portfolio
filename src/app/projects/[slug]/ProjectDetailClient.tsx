@@ -162,24 +162,10 @@ export function ProjectDetailClient({
         )}
       </div>
 
-      {/* Hero Cover Image Banner in macOS Browser Frame */}
+      {/* Hero Cover Image Banner */}
       <Reveal direction="up" delay={0.3}>
-        <div className="w-full rounded-[var(--r-xl)] overflow-hidden glass border border-[var(--line-strong)] shadow-[var(--glow)]">
-          {/* macOS Window Titlebar */}
-          <div className="px-4 py-3 bg-[var(--surface-2)] border-b border-[var(--line)] flex items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-[#FF5F56] inline-block opacity-85" />
-              <span className="w-3 h-3 rounded-full bg-[#FFBD2E] inline-block opacity-85" />
-              <span className="w-3 h-3 rounded-full bg-[#27C93F] inline-block opacity-85" />
-            </div>
-            <div className="max-w-md w-full bg-[var(--bg)]/90 rounded-md px-3 py-1 text-center font-mono text-[11px] text-[var(--text-2)] border border-[var(--line)] truncate shadow-inner">
-              {project.links?.find((l) => l.kind === "live")?.href || "https://cbcai.co.ke"}
-            </div>
-            <div className="w-12 hidden sm:block" />
-          </div>
-
-          {/* Screenshot viewport container */}
-          <div className="relative aspect-video w-full overflow-hidden">
+        <div className="w-full rounded-[var(--r-xl)] overflow-hidden glass p-2 border border-[var(--line-strong)] shadow-[var(--glow)]">
+          <div className="relative aspect-video w-full overflow-hidden rounded-[calc(var(--r-xl)-4px)]">
             <ImagePlaceholder
               src={project.cover}
               alt={project.title}

@@ -97,11 +97,6 @@ export function ImagePlaceholder({
             <span className="font-medium text-xs md:text-sm text-[var(--text)] tracking-wide">
               {label}
             </span>
-            {src && (
-              <span className="font-mono text-[10px] text-[var(--text-2)] truncate max-w-full opacity-60 bg-[rgba(0,0,0,0.2)] px-2 py-0.5 rounded border border-[var(--line)]">
-                {src}
-              </span>
-            )}
           </div>
         )}
       </div>

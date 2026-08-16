@@ -121,8 +121,7 @@ export const projects: Project[] = [
       { group: "Monetization", items: ["AdMob", "In-App Purchases / Play Billing", "BillingGuard"] }
     ],
     links: [
-      { label: "Google Play Store", href: "https://play.google.com/store/apps/details?id=com.softdevbrian.tukokadi&hl=en", kind: "store" },
-      { label: "GitHub Repository", href: "https://github.com/softdevbrian/TUKO-KADI", kind: "repo" }
+      { label: "Google Play Store", href: "https://play.google.com/store/apps/details?id=com.softdevbrian.tukokadi&hl=en", kind: "store" }
     ],
     cover: "/images/projects/tuko-kadi/cover.png",
     shots: [
