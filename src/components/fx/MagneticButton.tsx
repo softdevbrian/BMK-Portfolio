@@ -52,7 +52,7 @@ export function MagneticButton({
   return (
     <motion.div
       ref={ref}
-      style={shouldReduceMotion ? undefined : { x, y }}
+      style={{ x, y }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}

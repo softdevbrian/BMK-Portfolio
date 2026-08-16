@@ -1,7 +1,6 @@
 "use client"
 
-import { useState, type ReactNode } from "react"
-import { motion, useReducedMotion } from "motion/react"
+import { type ReactNode } from "react"
 import { cn } from "@/lib/cn"
 
 interface MarqueeProps {
@@ -15,52 +14,47 @@ interface MarqueeProps {
 export function Marquee({
   children,
   direction = "left",
-  speed = 28,
+  speed = 32,
   pauseOnHover = true,
   className = "",
 }: MarqueeProps) {
-  const [isPaused, setIsPaused] = useState(false)
-  const shouldReduceMotion = useReducedMotion()
-
   return (
     <div
       className={cn(
-        "relative overflow-hidden w-full select-none py-2",
-        shouldReduceMotion && "overflow-x-auto",
+        "group relative overflow-hidden w-full select-none py-2 flex",
         className
       )}
-      onMouseEnter={() => pauseOnHover && setIsPaused(true)}
-      onMouseLeave={() => pauseOnHover && setIsPaused(false)}
+      style={
+        {
+          "--marquee-duration": `${speed}s`,
+        } as React.CSSProperties
+      }
     >
       {/* Side gradient fades */}
-      {!shouldReduceMotion && (
-        <>
-          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 md:w-28 bg-gradient-to-r from-[var(--bg)] to-transparent z-10" />
-          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 md:w-28 bg-gradient-to-l from-[var(--bg)] to-transparent z-10" />
-        </>
-      )}
+      <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 md:w-28 bg-gradient-to-r from-[var(--bg)] to-transparent z-10" />
+      <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 md:w-28 bg-gradient-to-l from-[var(--bg)] to-transparent z-10" />
 
-      <div className="flex w-max">
-        <motion.div
-          animate={
-            isPaused || shouldReduceMotion
-              ? {}
-              : {
-                  x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"],
-                }
-          }
-          transition={{
-            repeat: Infinity,
-            ease: "linear",
-            duration: speed,
-          }}
-          className="flex shrink-0 items-center gap-8 md:gap-12 will-change-transform motion-reduce:transform-none"
-        >
-          {children}
-          {children}
-          {children}
-          {children}
-        </motion.div>
+      {/* Primary Track */}
+      <div
+        className={cn(
+          "flex shrink-0 items-center gap-4 sm:gap-6 pr-4 sm:pr-6 will-change-transform",
+          direction === "left" ? "animate-marquee" : "animate-marquee-reverse",
+          pauseOnHover && "group-hover:[animation-play-state:paused]"
+        )}
+      >
+        {children}
+      </div>
+
+      {/* Seamless Mirror Track */}
+      <div
+        className={cn(
+          "flex shrink-0 items-center gap-4 sm:gap-6 pr-4 sm:pr-6 will-change-transform",
+          direction === "left" ? "animate-marquee" : "animate-marquee-reverse",
+          pauseOnHover && "group-hover:[animation-play-state:paused]"
+        )}
+        aria-hidden="true"
+      >
+        {children}
       </div>
     </div>
   )
