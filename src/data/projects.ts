@@ -192,7 +192,7 @@ export const projects: Project[] = [
     role: "Lead Full-Stack Developer & UI/UX",
     period: "Nov 2024",
     status: "Shipped MVP",
-    featured: false,
+    featured: true,
     accent: "amber",
     categories: ["Web", "Payments"],
     summary: "A localized (KES) personal finance dashboard built around flexible, overlapping time periods rather than fixed calendar months, backed by serverless Postgres.",
