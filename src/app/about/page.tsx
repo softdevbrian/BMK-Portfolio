@@ -35,10 +35,11 @@ export default function AboutPage() {
             <Reveal direction="scale" delay={0.1}>
               <div className="p-2 rounded-[var(--r-xl)] glass border border-[var(--line-strong)]">
                 <ImagePlaceholder
-                  src="/images/passport.jpg"
+                  src="/images/passport.png"
                   alt={site.name}
-                  label="Brian Kuria Maina (800x800)"
+                  label="Brian Maina Kuria (800x800)"
                   aspect="square"
+                  objectPosition="center 15%"
                   ringGlow
                   priority
                 />

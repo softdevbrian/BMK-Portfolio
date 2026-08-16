@@ -15,6 +15,8 @@ interface ImagePlaceholderProps {
   priority?: boolean
   className?: string
   ringGlow?: boolean
+  objectPosition?: string
+  fitMode?: "cover" | "contain"
 }
 
 export function ImagePlaceholder({
@@ -25,6 +27,8 @@ export function ImagePlaceholder({
   priority = false,
   className = "",
   ringGlow = false,
+  objectPosition = "center",
+  fitMode = "cover",
 }: ImagePlaceholderProps) {
   const [imageError, setImageError] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
@@ -73,8 +77,10 @@ export function ImagePlaceholder({
             fill
             priority={priority}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            style={{ objectPosition }}
             className={cn(
-              "object-cover transition-opacity duration-500 z-10",
+              "transition-opacity duration-500 z-10",
+              fitMode === "contain" ? "object-contain" : "object-cover",
               imageLoaded ? "opacity-100" : "opacity-0"
             )}
             onLoad={() => setImageLoaded(true)}

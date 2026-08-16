@@ -382,17 +382,25 @@ export function ProjectDetailClient({
 
               <div
                 onClick={(e) => e.stopPropagation()}
-                className="relative max-w-4xl max-h-[85vh] w-full flex flex-col items-center gap-4 cursor-default"
+                className={cn(
+                  "relative flex flex-col items-center gap-3 cursor-default p-2",
+                  activeLightboxShot.aspect === "phone"
+                    ? "h-[78vh] max-h-[82vh] aspect-[9/16] w-auto max-w-[90vw]"
+                    : "w-full max-w-5xl max-h-[85vh]"
+                )}
               >
-                <div className="w-full rounded-[var(--r-lg)] overflow-hidden glass p-2 border border-[var(--line-strong)]">
+                <div className="w-full h-full rounded-[var(--r-lg)] overflow-hidden glass p-2 border border-[var(--line-strong)] flex items-center justify-center">
                   <ImagePlaceholder
                     src={activeLightboxShot.src}
                     alt={activeLightboxShot.caption}
                     label={activeLightboxShot.caption}
                     aspect={activeLightboxShot.aspect}
+                    fitMode={activeLightboxShot.aspect === "phone" ? "contain" : "cover"}
+                    objectPosition="top center"
+                    className="w-full h-full"
                   />
                 </div>
-                <p className="font-mono text-sm text-[var(--text)] bg-[var(--surface)] px-4 py-1.5 rounded-full border border-[var(--line)]">
+                <p className="font-mono text-xs sm:text-sm text-[var(--text)] bg-[var(--surface)] px-4 py-1.5 rounded-full border border-[var(--line)] shrink-0">
                   {activeLightboxShot.caption}
                 </p>
               </div>

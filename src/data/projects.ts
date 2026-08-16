@@ -71,9 +71,9 @@ export const projects: Project[] = [
     ],
     cover: "/images/projects/cbc-ai/cover.png",
     shots: [
-      { src: "/images/projects/cbc-ai/shot-01.png", caption: "CBC Competency Tracking & Assessment", aspect: "phone" },
-      { src: "/images/projects/cbc-ai/shot-02.png", caption: "Teacher Operations & Administrative Suite", aspect: "phone" },
-      { src: "/images/projects/cbc-ai/shot-03.png", caption: "Learner AI & Educational Knowledge Graph", aspect: "phone" }
+      { src: "/images/projects/cbc-ai/shot-01.jpg", caption: "CBC Competency Tracking & Assessment", aspect: "phone" },
+      { src: "/images/projects/cbc-ai/shot-02.jpeg", caption: "Teacher Operations & Administrative Suite", aspect: "phone" },
+      { src: "/images/projects/cbc-ai/shot-03.jpeg", caption: "Learner AI & Educational Knowledge Graph", aspect: "phone" }
     ]
   },
   {

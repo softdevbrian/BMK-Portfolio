@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   },
   description: `${site.name} — ${site.role} based in ${site.location}. Building high-performance, scalable web, mobile, and AI products.`,
   keywords: [
-    "Brian Kuria Maina",
+    "Brian Maina Kuria",
     "CTO",
     "Full-Stack Engineer",
     "Product Engineer",

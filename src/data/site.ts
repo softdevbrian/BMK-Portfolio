@@ -1,5 +1,5 @@
 export const site = {
-  name: "Brian Kuria Maina",
+  name: "Brian Maina Kuria",
   role: "CTO & Full-Stack Product Engineer",
   location: "Nairobi, Kenya",
   emailPrimary: "softdevbriankuria@gmail.com",
@@ -7,7 +7,7 @@ export const site = {
   phonePrimary: "+254790408143",
   phoneSecondary: "+254716919124",
   github: "https://github.com/softdevbrian",
-  cv: "/Brian_Kuria_Maina_CV.pdf",
+  cv: "/Brian_Maina_Kuria_CV.pdf",
   emailjs: {
     publicKey: "0hkz3VV1ycjsOVbuD",
     serviceId: "service_h90hjdq",
