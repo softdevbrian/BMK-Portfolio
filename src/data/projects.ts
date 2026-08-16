@@ -126,9 +126,9 @@ export const projects: Project[] = [
     ],
     cover: "/images/projects/tuko-kadi/cover.png",
     shots: [
-      { src: "/images/projects/tuko-kadi/shot-01.png", caption: "Gameplay Screen with Custom Canvas Card Physics", aspect: "phone" },
-      { src: "/images/projects/tuko-kadi/shot-02.png", caption: "Local P2P QR Code Lobby Pairing", aspect: "phone" },
-      { src: "/images/projects/tuko-kadi/shot-03.png", caption: "Behavioural AI Opponents Selection", aspect: "phone" }
+      { src: "/images/projects/tuko-kadi/shot-01.jpeg", caption: "Gameplay Screen with Custom Canvas Card Physics", aspect: "wide" },
+      { src: "/images/projects/tuko-kadi/shot-02.jpeg", caption: "Local P2P QR Code Lobby Pairing", aspect: "phone" },
+      { src: "/images/projects/tuko-kadi/shot-03.jpeg", caption: "Selecting the Game Mode Screen", aspect: "phone" }
     ]
   },
   {

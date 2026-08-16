@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import {
   ArrowLeft,
@@ -9,6 +9,8 @@ import {
   Play,
   Smartphone,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   X,
   CheckCircle2,
   AlertTriangle,
@@ -38,133 +40,178 @@ export function ProjectDetailClient({
   nextProject,
 }: ProjectDetailClientProps) {
   const [openChallengeIndex, setOpenChallengeIndex] = useState<number | null>(0)
-  const [activeLightboxShot, setActiveLightboxShot] = useState<{
-    src: string
-    caption: string
-    aspect: "phone" | "wide"
-  } | null>(null)
+  const [activeLightboxIndex, setActiveLightboxIndex] = useState<number | null>(null)
 
-  const toggleChallenge = (idx: number) => {
-    setOpenChallengeIndex(openChallengeIndex === idx ? null : idx)
+  const activeLightboxShot =
+    activeLightboxIndex !== null && project.shots && project.shots[activeLightboxIndex]
+      ? project.shots[activeLightboxIndex]
+      : null
+
+  const totalShots = project.shots ? project.shots.length : 0
+
+  useEffect(() => {
+    if (activeLightboxIndex === null || totalShots === 0) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        setActiveLightboxIndex((prev) =>
+          prev !== null && prev > 0 ? prev - 1 : totalShots - 1
+        )
+      } else if (e.key === "ArrowRight") {
+        setActiveLightboxIndex((prev) =>
+          prev !== null && prev < totalShots - 1 ? prev + 1 : 0
+        )
+      } else if (e.key === "Escape") {
+        setActiveLightboxIndex(null)
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [activeLightboxIndex, totalShots])
+
+  const toggleChallenge = (index: number) => {
+    setOpenChallengeIndex(openChallengeIndex === index ? null : index)
   }
 
-  const linkIcons = {
-    live: <ExternalLink className="w-4 h-4" />,
-    store: <Smartphone className="w-4 h-4" />,
-    repo: <GithubIcon className="w-4 h-4" />,
-    demo: <Play className="w-4 h-4" />,
+  const handlePrevShot = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (totalShots === 0) return
+    setActiveLightboxIndex((prev) =>
+      prev !== null && prev > 0 ? prev - 1 : totalShots - 1
+    )
+  }
+
+  const handleNextShot = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (totalShots === 0) return
+    setActiveLightboxIndex((prev) =>
+      prev !== null && prev < totalShots - 1 ? prev + 1 : 0
+    )
   }
 
   return (
-    <article className="py-12 md:py-20 flex flex-col gap-16 md:gap-24">
-      {/* Back Link */}
-      <div className="wrap">
-        <Reveal direction="up" delay={0.05}>
+    <article className="wrap py-8 md:py-12 flex flex-col gap-12 sm:gap-16">
+      {/* Header Back Button & Meta Breadcrumb */}
+      <div className="flex flex-col gap-4">
+        <Reveal direction="down" delay={0.05}>
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--text-2)] hover:text-[var(--accent-text)] transition-colors mb-6 group"
+            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--text-2)] hover:text-[var(--accent-text)] transition-colors focus-visible:outline-2 focus-visible:outline-[var(--teal)] rounded-md w-fit"
           >
-            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-            <span>Back to all projects</span>
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to All Projects</span>
           </Link>
         </Reveal>
 
-        {/* Hero Section */}
-        <div className="flex flex-col gap-6 max-w-4xl">
+        {/* Title & Tagline Header */}
+        <div className="flex flex-col gap-3">
           <Reveal direction="up" delay={0.1}>
-            <div className="flex flex-wrap items-center gap-3">
-              <Badge variant={project.accent} size="md">
-                {project.ownership} Project
-              </Badge>
-              <span className="font-mono text-xs text-[var(--text-2)]">
-                {project.period}
-              </span>
-              <span className="text-[var(--text-2)] opacity-30">•</span>
-              <span className="font-mono text-xs text-[var(--ok)]">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <Badge variant={project.accent}>{project.ownership}</Badge>
+              <span className="font-mono text-xs text-[var(--text-2)]">•</span>
+              <span className="font-mono text-xs text-[var(--teal)] font-semibold">
                 {project.status}
               </span>
+              <span className="font-mono text-xs text-[var(--text-2)]">•</span>
+              <span className="font-mono text-xs text-[var(--text-2)]">{project.period}</span>
             </div>
           </Reveal>
 
           <Reveal direction="up" delay={0.15}>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold font-heading text-[var(--text)] tracking-tight leading-[1.1]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-[var(--text)] tracking-tight">
               {project.title}
             </h1>
           </Reveal>
 
           <Reveal direction="up" delay={0.2}>
-            <p className="text-lg sm:text-xl text-[var(--text-2)] leading-relaxed">
+            <p className="text-base sm:text-lg text-[var(--text-2)] max-w-3xl leading-relaxed">
               {project.tagline}
             </p>
           </Reveal>
-
-          {/* Meta Role & Links Row */}
-          <Reveal direction="up" delay={0.25}>
-            <div className="flex flex-wrap items-center justify-between gap-6 pt-4 border-t border-[var(--line)]">
-              <div className="flex flex-col">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-[var(--text-2)]">
-                  My Role
-                </span>
-                <span className="text-sm font-semibold text-[var(--text)] font-heading">
-                  {project.role}
-                </span>
-              </div>
-
-              {/* Action Link Buttons */}
-              <div className="flex flex-wrap items-center gap-3">
-                {project.links.map((link) => (
-                  <Button
-                    key={link.label}
-                    href={link.href}
-                    variant={link.kind === "live" ? "primary" : "outline"}
-                    size="sm"
-                    external
-                    rightIcon={linkIcons[link.kind]}
-                  >
-                    {link.label}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </Reveal>
         </div>
 
-        {/* Cover Image in Glass Container */}
-        <Reveal direction="scale" delay={0.2} className="mt-4">
-          <div className="rounded-[var(--r-xl)] p-2 sm:p-3 glass border border-[var(--line-strong)] shadow-[var(--sh-1)]">
+        {/* External Links Bar */}
+        {project.links && project.links.length > 0 && (
+          <Reveal direction="up" delay={0.25}>
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              {project.links.map((link) => (
+                <Button
+                  key={link.href}
+                  href={link.href}
+                  external
+                  variant={link.kind === "live" ? "primary" : "secondary"}
+                  size="sm"
+                  leftIcon={
+                    link.kind === "repo" ? (
+                      <GithubIcon className="w-4 h-4" />
+                    ) : link.kind === "store" ? (
+                      <Smartphone className="w-4 h-4" />
+                    ) : link.kind === "demo" ? (
+                      <Play className="w-4 h-4" />
+                    ) : (
+                      <ExternalLink className="w-4 h-4" />
+                    )
+                  }
+                >
+                  {link.label}
+                </Button>
+              ))}
+            </div>
+          </Reveal>
+        )}
+      </div>
+
+      {/* Hero Cover Image Banner in macOS Browser Frame */}
+      <Reveal direction="up" delay={0.3}>
+        <div className="w-full rounded-[var(--r-xl)] overflow-hidden glass border border-[var(--line-strong)] shadow-[var(--glow)]">
+          {/* macOS Window Titlebar */}
+          <div className="px-4 py-3 bg-[var(--surface-2)] border-b border-[var(--line)] flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full bg-[#FF5F56] inline-block opacity-85" />
+              <span className="w-3 h-3 rounded-full bg-[#FFBD2E] inline-block opacity-85" />
+              <span className="w-3 h-3 rounded-full bg-[#27C93F] inline-block opacity-85" />
+            </div>
+            <div className="max-w-md w-full bg-[var(--bg)]/90 rounded-md px-3 py-1 text-center font-mono text-[11px] text-[var(--text-2)] border border-[var(--line)] truncate shadow-inner">
+              {project.links?.find((l) => l.kind === "live")?.href || "https://cbcai.co.ke"}
+            </div>
+            <div className="w-12 hidden sm:block" />
+          </div>
+
+          {/* Screenshot viewport container */}
+          <div className="relative aspect-video w-full overflow-hidden">
             <ImagePlaceholder
               src={project.cover}
-              alt={`${project.title} Cover`}
-              label={`${project.title} Cover`}
+              alt={project.title}
+              label={`${project.title} Cover Banner`}
               aspect="video"
+              fitMode="cover"
+              objectPosition="top center"
               priority
             />
           </div>
-        </Reveal>
-      </div>
+        </div>
+      </Reveal>
 
-      {/* Metrics Band */}
+      {/* Quantifiable Impact Metrics Bar */}
       {project.metrics && project.metrics.length > 0 && (
-        <section className="py-6 border-y border-[var(--line)] bg-[rgba(255,255,255,0.015)]">
-          <div className="wrap">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {project.metrics.map((metric, mIdx) => (
-                <Stat
-                  key={mIdx}
-                  value={metric.value}
-                  prefix={metric.prefix}
-                  suffix={metric.suffix}
-                  label={metric.label}
-                />
-              ))}
-            </div>
-          </div>
+        <section className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-6 rounded-[var(--r-xl)] glass border border-[var(--line)]">
+          {project.metrics.map((metric, mIdx) => (
+            <Reveal key={mIdx} direction="up" delay={0.1 * mIdx}>
+              <Stat
+                value={metric.value}
+                label={metric.label}
+                prefix={metric.prefix}
+                suffix={metric.suffix}
+              />
+            </Reveal>
+          ))}
         </section>
       )}
 
-      <div className="wrap flex flex-col gap-16 md:gap-24">
-        {/* Two-Column Problem & Highlights Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      {/* Main Content Grid: Problem vs Solution */}
+      <div className="flex flex-col gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           {/* Problem Statement */}
           <div className="lg:col-span-6 flex flex-col gap-4">
             <Reveal direction="up" delay={0.1}>
@@ -248,40 +295,35 @@ export function ProjectDetailClient({
                         />
                       </button>
 
-                      <AnimatePresence initial={false}>
-                        {isOpen && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                          >
-                            <div className="p-5 pt-0 grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-[var(--line)] bg-[rgba(0,0,0,0.15)] text-sm">
-                              {/* Problem */}
-                              <div className="p-4 rounded-[var(--r)] bg-[rgba(240,118,107,0.06)] border border-[rgba(240,118,107,0.2)] flex flex-col gap-2">
-                                <div className="flex items-center gap-2 text-[var(--danger)] font-mono text-xs font-semibold uppercase">
-                                  <AlertTriangle className="w-4 h-4 shrink-0" />
-                                  <span>The Bottleneck</span>
-                                </div>
-                                <p className="text-[var(--text-2)] leading-relaxed">
-                                  {challenge.problem}
-                                </p>
-                              </div>
-
-                              {/* Solution */}
-                              <div className="p-4 rounded-[var(--r)] bg-[rgba(45,212,191,0.06)] border border-[rgba(45,212,191,0.2)] flex flex-col gap-2">
-                                <div className="flex items-center gap-2 text-[var(--accent-text)] font-mono text-xs font-semibold uppercase">
-                                  <Lightbulb className="w-4 h-4 shrink-0" />
-                                  <span>Technical Solution</span>
-                                </div>
-                                <p className="text-[var(--text)] leading-relaxed">
-                                  {challenge.solution}
-                                </p>
-                              </div>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.25 }}
+                          className="px-5 pb-5 pt-1 border-t border-[var(--line)] grid grid-cols-1 md:grid-cols-2 gap-6"
+                        >
+                          <div className="flex flex-col gap-2 p-4 rounded-[var(--r)] bg-[rgba(240,118,107,0.05)] border border-[rgba(240,118,107,0.2)]">
+                            <div className="flex items-center gap-2 text-xs font-mono font-semibold text-[var(--danger)]">
+                              <AlertTriangle className="w-4 h-4" />
+                              <span>THE HARD PROBLEM</span>
                             </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                            <p className="text-xs sm:text-sm text-[var(--text-2)] leading-relaxed">
+                              {challenge.problem}
+                            </p>
+                          </div>
+
+                          <div className="flex flex-col gap-2 p-4 rounded-[var(--r)] bg-[rgba(45,212,191,0.05)] border border-[rgba(45,212,191,0.2)]">
+                            <div className="flex items-center gap-2 text-xs font-mono font-semibold text-[var(--teal)]">
+                              <Lightbulb className="w-4 h-4" />
+                              <span>THE ARCHITECTURAL SOLUTION</span>
+                            </div>
+                            <p className="text-xs sm:text-sm text-[var(--text)] leading-relaxed">
+                              {challenge.solution}
+                            </p>
+                          </div>
+                        </motion.div>
+                      )}
                     </div>
                   </Reveal>
                 )
@@ -290,30 +332,29 @@ export function ProjectDetailClient({
           </section>
         )}
 
-        {/* Tech Stack Grouped Chips */}
+        {/* Tech Stack Matrix */}
         {project.stack && project.stack.length > 0 && (
           <section className="flex flex-col gap-6">
             <Reveal direction="up" delay={0.1}>
-              <span className="eyebrow">Technology Breakdown</span>
+              <span className="eyebrow">Technology Stack</span>
               <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[var(--text)]">
-                Stack & Dependencies
+                Tools & Technologies Used
               </h2>
             </Reveal>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {project.stack.map((group, gIdx) => (
                 <Reveal key={gIdx} direction="up" delay={0.08 * gIdx}>
-                  <div className="glass p-5 rounded-[var(--r-lg)] border border-[var(--line)] h-full flex flex-col gap-3">
-                    <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-[var(--teal)] pb-2 border-b border-[var(--line)]">
-                      <Layers className="w-3.5 h-3.5" />
+                  <div className="glass p-5 rounded-[var(--r-lg)] border border-[var(--line)] flex flex-col gap-3 h-full">
+                    <div className="flex items-center gap-2 text-xs font-mono font-semibold text-[var(--accent-text)] uppercase tracking-wider">
+                      <Layers className="w-4 h-4 text-[var(--teal)]" />
                       <span>{group.group}</span>
                     </div>
-
-                    <div className="flex flex-wrap gap-1.5 pt-1">
+                    <div className="flex flex-wrap gap-1.5">
                       {group.items.map((item) => (
                         <span
                           key={item}
-                          className="px-2.5 py-1 rounded bg-[var(--surface-2)] text-xs font-mono text-[var(--text)] border border-[var(--line)]"
+                          className="text-xs font-mono text-[var(--text-2)] bg-[var(--surface-2)] px-2.5 py-1 rounded border border-[var(--line)]"
                         >
                           {item}
                         </span>
@@ -340,7 +381,7 @@ export function ProjectDetailClient({
               {project.shots.map((shot, sIdx) => (
                 <Reveal key={sIdx} direction="up" delay={0.08 * sIdx}>
                   <div
-                    onClick={() => setActiveLightboxShot(shot)}
+                    onClick={() => setActiveLightboxIndex(sIdx)}
                     className="cursor-pointer group flex flex-col gap-2"
                   >
                     <TiltCard className="p-2 bg-[var(--surface)]">
@@ -362,31 +403,57 @@ export function ProjectDetailClient({
           </section>
         )}
 
-        {/* Lightbox Modal */}
+        {/* Lightbox Modal with Next / Back Navigation */}
         <AnimatePresence>
           {activeLightboxShot && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setActiveLightboxShot(null)}
-              className="fixed inset-0 z-50 bg-[var(--bg)]/95 backdrop-blur-xl flex items-center justify-center p-4 sm:p-8 cursor-zoom-out"
+              onClick={() => setActiveLightboxIndex(null)}
+              className="fixed inset-0 z-50 bg-[var(--bg)]/95 backdrop-blur-xl flex items-center justify-center p-4 sm:p-8 cursor-zoom-out select-none"
             >
+              {/* Close Button */}
               <button
-                onClick={() => setActiveLightboxShot(null)}
+                onClick={() => setActiveLightboxIndex(null)}
                 aria-label="Close Lightbox"
-                className="absolute top-6 right-6 p-2 rounded-full glass text-[var(--text)] hover:border-[var(--teal)] transition-colors focus:outline-none cursor-pointer"
+                className="absolute top-6 right-6 p-2 rounded-full glass text-[var(--text)] hover:text-[var(--teal)] hover:border-[var(--teal)] transition-colors focus:outline-none cursor-pointer z-50"
               >
                 <X className="w-6 h-6" />
               </button>
 
+              {/* Left Arrow (Previous Shot) */}
+              {totalShots > 1 && (
+                <button
+                  onClick={handlePrevShot}
+                  aria-label="Previous screenshot"
+                  title="Previous (Left Arrow)"
+                  className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 p-3 rounded-full glass border border-[var(--line-strong)] text-[var(--text)] hover:text-[var(--teal)] hover:border-[var(--teal)] hover:scale-110 active:scale-95 transition-all cursor-pointer z-50 shadow-2xl"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+              )}
+
+              {/* Right Arrow (Next Shot) */}
+              {totalShots > 1 && (
+                <button
+                  onClick={handleNextShot}
+                  aria-label="Next screenshot"
+                  title="Next (Right Arrow)"
+                  className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 p-3 rounded-full glass border border-[var(--line-strong)] text-[var(--text)] hover:text-[var(--teal)] hover:border-[var(--teal)] hover:scale-110 active:scale-95 transition-all cursor-pointer z-50 shadow-2xl"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              )}
+
+              {/* Main Lightbox Content Container */}
               <div
                 onClick={(e) => e.stopPropagation()}
                 className={cn(
                   "relative flex flex-col items-center gap-3 cursor-default p-2",
                   activeLightboxShot.aspect === "phone"
                     ? "h-[78vh] max-h-[82vh] aspect-[9/16] w-auto max-w-[90vw]"
-                    : "w-full max-w-5xl max-h-[85vh]"
+                    : "w-full max-w-4xl max-h-[80vh]"
                 )}
               >
                 <div className="w-full h-full rounded-[var(--r-lg)] overflow-hidden glass p-2 border border-[var(--line-strong)] flex items-center justify-center">
@@ -395,14 +462,21 @@ export function ProjectDetailClient({
                     alt={activeLightboxShot.caption}
                     label={activeLightboxShot.caption}
                     aspect={activeLightboxShot.aspect}
-                    fitMode={activeLightboxShot.aspect === "phone" ? "contain" : "cover"}
-                    objectPosition="top center"
+                    fitMode="contain"
+                    objectPosition="center"
                     className="w-full h-full"
                   />
                 </div>
-                <p className="font-mono text-xs sm:text-sm text-[var(--text)] bg-[var(--surface)] px-4 py-1.5 rounded-full border border-[var(--line)] shrink-0">
-                  {activeLightboxShot.caption}
-                </p>
+                <div className="flex items-center gap-2 shrink-0">
+                  <p className="font-mono text-xs sm:text-sm text-[var(--text)] bg-[var(--surface)] px-4 py-1.5 rounded-full border border-[var(--line)]">
+                    {activeLightboxShot.caption}
+                  </p>
+                  {totalShots > 1 && (
+                    <span className="font-mono text-xs text-[var(--teal)] bg-[var(--surface-2)] px-3 py-1.5 rounded-full border border-[var(--line)] font-semibold">
+                      {(activeLightboxIndex ?? 0) + 1} / {totalShots}
+                    </span>
+                  )}
+                </div>
               </div>
             </motion.div>
           )}
