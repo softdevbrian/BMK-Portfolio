@@ -39,13 +39,14 @@ export function TiltCard({
   const [spotlightPos, setSpotlightPos] = useState({ x: 0, y: 0 })
 
   const shouldReduceMotion = useReducedMotion()
+  const isTiltDisabled = disabled || isTouchDevice || Boolean(shouldReduceMotion)
 
   const springConfig = { damping: 20, stiffness: 200, mass: 0.5 }
   const rotateX = useSpring(0, springConfig)
   const rotateY = useSpring(0, springConfig)
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (disabled || isTouchDevice || shouldReduceMotion || !cardRef.current) return
+    if (isTiltDisabled || !cardRef.current) return
 
     const rect = cardRef.current.getBoundingClientRect()
     const x = e.clientX - rect.left
@@ -64,7 +65,7 @@ export function TiltCard({
   }
 
   const handleMouseEnter = () => {
-    if (disabled || isTouchDevice || shouldReduceMotion) return
+    if (isTiltDisabled) return
     setIsHovered(true)
   }
 
@@ -72,18 +73,6 @@ export function TiltCard({
     setIsHovered(false)
     rotateX.set(0)
     rotateY.set(0)
-  }
-
-  if (disabled || isTouchDevice || shouldReduceMotion) {
-    return (
-      <div
-        ref={cardRef}
-        onClick={onClick}
-        className={cn("glass-card rounded-[var(--r-lg)] relative overflow-hidden", className)}
-      >
-        {children}
-      </div>
-    )
   }
 
   return (
@@ -100,24 +89,26 @@ export function TiltCard({
         perspective: 1000,
       }}
       className={cn(
-        "glass-card rounded-[var(--r-lg)] relative overflow-hidden transition-colors duration-300",
-        isHovered && "border-[var(--line-strong)] shadow-[0_12px_32px_rgba(0,0,0,0.4)]",
+        "glass-card rounded-[var(--r-lg)] relative overflow-hidden transition-colors duration-300 motion-reduce:transform-none",
+        isHovered && !isTiltDisabled && "border-[var(--line-strong)] shadow-[0_12px_32px_rgba(0,0,0,0.4)]",
         className
       )}
     >
       {/* Radial Spotlight */}
       <div
-        className="pointer-events-none absolute inset-0 transition-opacity duration-300 z-10"
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 transition-opacity duration-300 z-10 motion-reduce:hidden"
         style={{
-          opacity: isHovered ? 1 : 0,
+          opacity: isHovered && !isTiltDisabled ? 1 : 0,
           background: `radial-gradient(400px circle at ${spotlightPos.x}px ${spotlightPos.y}px, rgba(45, 212, 191, 0.12), transparent 70%)`,
         }}
       />
       {/* Brightening Border Glow Layer */}
       <div
-        className="pointer-events-none absolute inset-0 rounded-[var(--r-lg)] transition-opacity duration-300 z-10"
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-[var(--r-lg)] transition-opacity duration-300 z-10 motion-reduce:hidden"
         style={{
-          opacity: isHovered ? 1 : 0,
+          opacity: isHovered && !isTiltDisabled ? 1 : 0,
           background: `radial-gradient(350px circle at ${spotlightPos.x}px ${spotlightPos.y}px, rgba(45, 212, 191, 0.35), transparent 60%)`,
           mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
           maskComposite: "exclude",

@@ -185,10 +185,10 @@ export function ContactForm() {
 
   const inputClass = (hasError: boolean) =>
     cn(
-      "w-full px-4 py-3 rounded-[var(--r)] glass bg-[rgba(255,255,255,0.02)] text-[var(--text)] text-sm placeholder-[var(--text-2)]/50 border transition-all duration-200 focus:outline-none",
+      "w-full px-4 py-3 rounded-[var(--r)] bg-[var(--surface-2)] text-[var(--text)] text-sm placeholder-[var(--text-2)]/60 border transition-all duration-200 focus:outline-none",
       hasError
         ? "border-[var(--danger)] focus:ring-2 focus:ring-[var(--danger)]/30"
-        : "border-[var(--line)] focus:border-[var(--teal)] focus:ring-2 focus:ring-[rgba(45,212,191,0.22)]"
+        : "border-[var(--line)] focus:border-[var(--teal)] focus:ring-2 focus:ring-[var(--teal)]/20"
     )
 
   return (

@@ -36,7 +36,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variants = {
       primary:
-        "bg-[var(--teal)] text-[#0B0B10] font-semibold hover:bg-[var(--accent-text)] shadow-[var(--glow)] active:scale-[0.98]",
+        "bg-[var(--teal)] text-white dark:text-[#061215] font-semibold hover:opacity-90 shadow-[var(--glow)] active:scale-[0.98]",
       secondary:
         "glass text-[var(--text)] hover:bg-[var(--surface-2)] hover:border-[var(--line-strong)] active:scale-[0.98]",
       outline:

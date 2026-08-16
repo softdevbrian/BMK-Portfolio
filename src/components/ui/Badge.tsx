@@ -20,7 +20,7 @@ export function Badge({
     teal: "bg-[rgba(45,212,191,0.12)] text-[var(--accent-text)] border-[rgba(45,212,191,0.25)]",
     violet: "bg-[rgba(167,139,250,0.12)] text-[var(--violet)] border-[rgba(167,139,250,0.25)]",
     sky: "bg-[rgba(86,183,240,0.12)] text-[var(--sky)] border-[rgba(86,183,240,0.25)]",
-    amber: "bg-[rgba(245,158,11,0.12)] text-[#FBBF24] border-[rgba(245,158,11,0.25)]",
+    amber: "bg-[rgba(245,158,11,0.12)] text-[#D97706] dark:text-[#FBBF24] border-[rgba(245,158,11,0.25)]",
     default: "bg-[var(--surface-2)] text-[var(--text-2)] border-[var(--line)]",
     outline: "bg-transparent text-[var(--text-2)] border-[var(--line-strong)]",
   }

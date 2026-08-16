@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next"
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google"
+import Script from "next/script"
 import { site } from "@/data/site"
 import { SmoothScroll } from "@/components/fx/SmoothScroll"
 import { PageShell } from "@/components/layout/PageShell"
+import { ThemeProvider } from "@/components/theme/ThemeProvider"
 import "./globals.css"
 
 const spaceGrotesk = Space_Grotesk({
@@ -24,7 +26,10 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const viewport: Viewport = {
-  themeColor: "#0B0B10",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0B0B10" },
+    { media: "(prefers-color-scheme: light)", color: "#F8FAFC" },
+  ],
   width: "device-width",
   initialScale: 1,
 }
@@ -42,7 +47,7 @@ export const metadata: Metadata = {
     "Full-Stack Engineer",
     "Product Engineer",
     "Next.js",
-    "React Native",
+    "Flutter",
     "TypeScript",
     "Software Architect",
     "Nairobi Kenya",
@@ -85,12 +90,22 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="bg-[var(--bg)] text-[var(--text)] antialiased font-sans">
-        <SmoothScroll>
-          <PageShell>{children}</PageShell>
-        </SmoothScroll>
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.add('light');document.documentElement.setAttribute('data-theme','light');}}catch(e){}})()`,
+          }}
+        />
+        <ThemeProvider>
+          <SmoothScroll>
+            <PageShell>{children}</PageShell>
+          </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   )

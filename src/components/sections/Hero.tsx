@@ -125,7 +125,7 @@ export function Hero() {
               />
 
               {/* Passport Image Placeholder with Square Aspect */}
-              <div className="relative rounded-[var(--r-xl)] overflow-hidden p-1 bg-[rgba(11,11,16,0.9)] border border-[var(--line-strong)]">
+              <div className="relative rounded-[var(--r-xl)] overflow-hidden p-1 bg-[var(--bg)] border border-[var(--line-strong)]">
                 <ImagePlaceholder
                   src="/images/passport.jpg"
                   alt={site.name}

@@ -25,7 +25,7 @@ export function Footer() {
           <div className="md:col-span-2 flex flex-col gap-4">
             <Reveal direction="up" delay={0.05}>
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-[var(--r)] bg-gradient-to-tr from-[var(--teal)] to-[var(--violet)] flex items-center justify-center font-mono font-bold text-xs text-[#0B0B10]">
+                <div className="w-8 h-8 rounded-[var(--r)] bg-gradient-to-tr from-[var(--teal)] to-[var(--violet)] flex items-center justify-center font-mono font-bold text-xs text-[#061215]">
                   BK
                 </div>
                 <span className="font-heading font-bold text-lg text-[var(--text)]">
