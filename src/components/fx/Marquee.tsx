@@ -22,28 +22,28 @@ export function Marquee({
   const [isPaused, setIsPaused] = useState(false)
   const shouldReduceMotion = useReducedMotion()
 
-  if (shouldReduceMotion) {
-    return (
-      <div className={cn("flex overflow-x-auto py-4 gap-8", className)}>
-        {children}
-      </div>
-    )
-  }
-
   return (
     <div
-      className={cn("relative overflow-hidden w-full select-none py-2", className)}
+      className={cn(
+        "relative overflow-hidden w-full select-none py-2",
+        shouldReduceMotion && "overflow-x-auto",
+        className
+      )}
       onMouseEnter={() => pauseOnHover && setIsPaused(true)}
       onMouseLeave={() => pauseOnHover && setIsPaused(false)}
     >
       {/* Side gradient fades */}
-      <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 md:w-28 bg-gradient-to-r from-[var(--bg)] to-transparent z-10" />
-      <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 md:w-28 bg-gradient-to-l from-[var(--bg)] to-transparent z-10" />
+      {!shouldReduceMotion && (
+        <>
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 md:w-28 bg-gradient-to-r from-[var(--bg)] to-transparent z-10" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 md:w-28 bg-gradient-to-l from-[var(--bg)] to-transparent z-10" />
+        </>
+      )}
 
       <div className="flex w-max">
         <motion.div
           animate={
-            isPaused
+            isPaused || shouldReduceMotion
               ? {}
               : {
                   x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"],
@@ -54,7 +54,7 @@ export function Marquee({
             ease: "linear",
             duration: speed,
           }}
-          className="flex shrink-0 items-center gap-8 md:gap-12 will-change-transform"
+          className="flex shrink-0 items-center gap-8 md:gap-12 will-change-transform motion-reduce:transform-none"
         >
           {children}
           {children}

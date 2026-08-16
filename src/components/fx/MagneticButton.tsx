@@ -49,18 +49,10 @@ export function MagneticButton({
     y.set(0)
   }
 
-  if (shouldReduceMotion) {
-    return (
-      <div onClick={onClick} className={cn("inline-block", className)}>
-        {children}
-      </div>
-    )
-  }
-
   return (
     <motion.div
       ref={ref}
-      style={{ x, y }}
+      style={shouldReduceMotion ? undefined : { x, y }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}

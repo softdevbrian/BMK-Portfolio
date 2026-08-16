@@ -7,16 +7,13 @@ import { EASING } from "@/lib/motion"
 export default function Template({ children }: { children: ReactNode }) {
   const shouldReduceMotion = useReducedMotion()
 
-  if (shouldReduceMotion) {
-    return <>{children}</>
-  }
-
   return (
     <motion.div
-      initial={{ opacity: 0, y: 8 }}
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.45, ease: EASING }}
+      exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
+      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.45, ease: EASING }}
+      className="motion-reduce:transform-none motion-reduce:opacity-100"
     >
       {children}
     </motion.div>
