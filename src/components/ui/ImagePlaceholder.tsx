@@ -17,6 +17,7 @@ interface ImagePlaceholderProps {
   ringGlow?: boolean
   objectPosition?: string
   fitMode?: "cover" | "contain"
+  quality?: number
 }
 
 export function ImagePlaceholder({
@@ -29,6 +30,7 @@ export function ImagePlaceholder({
   ringGlow = false,
   objectPosition = "center",
   fitMode = "cover",
+  quality = 95,
 }: ImagePlaceholderProps) {
   const [imageError, setImageError] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
@@ -76,7 +78,8 @@ export function ImagePlaceholder({
             alt={alt || label}
             fill
             priority={priority}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            quality={quality}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, (max-width: 1280px) 1200px, 1920px"
             style={{ objectPosition }}
             className={cn(
               "transition-opacity duration-500 z-10",
