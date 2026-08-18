@@ -4,15 +4,17 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "motion/react"
-import { Menu, X, ArrowUpRight } from "lucide-react"
+import { Menu, X, FileText } from "lucide-react"
 import { site } from "@/data/site"
 import { cn } from "@/lib/cn"
 import { Button } from "@/components/ui/Button"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
+import { CvModal } from "@/components/ui/CvModal"
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [cvModalOpen, setCvModalOpen] = useState(false)
   const pathname = usePathname()
 
   useEffect(() => {
@@ -94,11 +96,10 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-2.5">
           <ThemeToggle />
           <Button
-            href={site.cv}
+            onClick={() => setCvModalOpen(true)}
             variant="outline"
             size="sm"
-            external
-            rightIcon={<ArrowUpRight className="w-3.5 h-3.5" />}
+            rightIcon={<FileText className="w-3.5 h-3.5 text-[var(--teal)]" />}
           >
             CV
           </Button>
@@ -168,14 +169,16 @@ export function Navbar() {
 
             <div className="flex flex-col gap-3 pt-8 pb-6 border-t border-[var(--line)]">
               <Button
-                href={site.cv}
+                onClick={() => {
+                  setMobileMenuOpen(false)
+                  setCvModalOpen(true)
+                }}
                 variant="outline"
                 size="md"
-                external
-                rightIcon={<ArrowUpRight className="w-4 h-4" />}
+                rightIcon={<FileText className="w-4 h-4 text-[var(--teal)]" />}
                 className="w-full"
               >
-                Download CV
+                View CV
               </Button>
               <Button
                 href="/contact"
@@ -190,6 +193,9 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* CV Preview & Download Modal */}
+      <CvModal isOpen={cvModalOpen} onClose={() => setCvModalOpen(false)} />
     </header>
   )
 }
