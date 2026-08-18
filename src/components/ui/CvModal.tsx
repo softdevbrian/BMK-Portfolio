@@ -360,39 +360,48 @@ function DocumentationModalContent({
                 </div>
                 <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs sm:text-sm font-medium">
                   <a
+                    href="https://bmk-portfolio-pied.vercel.app/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[#2783DE] dark:text-[#5E9FE8] hover:underline"
+                  >
+                    Portfolio
+                  </a>
+                  <span className="text-[#d1d5db] dark:text-[#4b5563]">·</span>
+                  <a
                     href="https://github.com/softdevbrian"
                     target="_blank"
                     rel="noreferrer"
-                    className="text-[#2783DE] dark:text-[#5E9FE8] hover:underline inline-flex items-center gap-1"
+                    className="text-[#2783DE] dark:text-[#5E9FE8] hover:underline"
                   >
-                    <GithubIcon className="w-3.5 h-3.5" /> GitHub
+                    GitHub
                   </a>
                   <span className="text-[#d1d5db] dark:text-[#4b5563]">·</span>
                   <a
                     href="https://cbcai.co.ke/"
                     target="_blank"
                     rel="noreferrer"
-                    className="text-[#2783DE] dark:text-[#5E9FE8] hover:underline inline-flex items-center gap-1"
+                    className="text-[#2783DE] dark:text-[#5E9FE8] hover:underline"
                   >
-                    CBC AI Platform <ExternalLink className="w-3 h-3" />
+                    CBC AI Platform
                   </a>
                   <span className="text-[#d1d5db] dark:text-[#4b5563]">·</span>
                   <a
                     href="https://play.google.com/store/apps/details?id=com.cbcai.app1&hl=en"
                     target="_blank"
                     rel="noreferrer"
-                    className="text-[#2783DE] dark:text-[#5E9FE8] hover:underline inline-flex items-center gap-1"
+                    className="text-[#2783DE] dark:text-[#5E9FE8] hover:underline"
                   >
-                    CBC AI Play Store <ExternalLink className="w-3 h-3" />
+                    CBC AI on Play Store
                   </a>
                   <span className="text-[#d1d5db] dark:text-[#4b5563]">·</span>
                   <a
                     href="https://play.google.com/store/apps/details?id=com.softdevbrian.tukokadi&hl=en"
                     target="_blank"
                     rel="noreferrer"
-                    className="text-[#2783DE] dark:text-[#5E9FE8] hover:underline inline-flex items-center gap-1"
+                    className="text-[#2783DE] dark:text-[#5E9FE8] hover:underline"
                   >
-                    Tuko Kadi Play Store <ExternalLink className="w-3 h-3" />
+                    Tuko Kadi on Play Store
                   </a>
                 </div>
               </header>
