@@ -48,8 +48,17 @@ function DocumentationModalContent({
   initialTab?: "cv" | "recommendation"
 }) {
   const [activeTab, setActiveTab] = useState<"cv" | "recommendation">(initialTab)
+  const [viewMode, setViewMode] = useState<"html" | "pdf">("html")
+  const [supportsPdf, setSupportsPdf] = useState(false)
   const [zoom, setZoom] = useState(1)
   const containerRef = useRef<HTMLDivElement>(null)
+
+  // Detect if the browser natively supports inline PDF viewing without auto-downloading
+  useEffect(() => {
+    if (typeof navigator !== "undefined" && Boolean(navigator.pdfViewerEnabled)) {
+      setSupportsPdf(true)
+    }
+  }, [])
 
   // Zoom handlers
   const handleZoomIn = () => setZoom((z) => Math.min(Number((z + 0.15).toFixed(2)), 2.2))
@@ -157,42 +166,72 @@ function DocumentationModalContent({
 
         {/* Action & Zoom Controls */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0 ml-auto">
-          {/* Zoom Toolbar */}
-          <div className="hidden xs:flex items-center bg-[var(--surface)] border border-[var(--line)] rounded-[var(--r-pill)] p-0.5 gap-0.5">
-            <button
-              onClick={handleZoomOut}
-              aria-label="Zoom out"
-              title="Zoom out (-)"
-              className="p-1 sm:p-1.5 rounded-full hover:bg-[var(--surface-2)] text-[var(--text-2)] hover:text-[var(--text)] transition-colors cursor-pointer"
-            >
-              <ZoomOut className="w-3.5 h-3.5" />
-            </button>
-            <button
-              onClick={handleResetZoom}
-              title="Reset zoom (0)"
-              className="px-1.5 py-0.5 font-mono text-[11px] font-medium text-[var(--text-2)] hover:text-[var(--text)] transition-colors cursor-pointer min-w-[42px] text-center"
-            >
-              {Math.round(zoom * 100)}%
-            </button>
-            <button
-              onClick={handleZoomIn}
-              aria-label="Zoom in"
-              title="Zoom in (+)"
-              className="p-1 sm:p-1.5 rounded-full hover:bg-[var(--surface-2)] text-[var(--text-2)] hover:text-[var(--text)] transition-colors cursor-pointer"
-            >
-              <ZoomIn className="w-3.5 h-3.5" />
-            </button>
-            {zoom !== 1 && (
+          {/* View Format Switcher (Only shown if browser supports inline PDF viewing) */}
+          {supportsPdf && (
+            <div className="flex items-center gap-1 p-0.5 rounded-[var(--r-pill)] bg-[var(--surface)] border border-[var(--line)]">
+              <button
+                onClick={() => setViewMode("html")}
+                className={cn(
+                  "px-2.5 sm:px-3 py-1 rounded-[var(--r-pill)] font-mono text-[11px] font-semibold transition-colors cursor-pointer",
+                  viewMode === "html"
+                    ? "bg-[var(--teal)] text-[#061215] shadow-[0_0_8px_rgba(45,212,191,0.3)]"
+                    : "text-[var(--text-2)] hover:text-[var(--text)]"
+                )}
+              >
+                Web View
+              </button>
+              <button
+                onClick={() => setViewMode("pdf")}
+                className={cn(
+                  "px-2.5 sm:px-3 py-1 rounded-[var(--r-pill)] font-mono text-[11px] font-semibold transition-colors cursor-pointer",
+                  viewMode === "pdf"
+                    ? "bg-[var(--teal)] text-[#061215] shadow-[0_0_8px_rgba(45,212,191,0.3)]"
+                    : "text-[var(--text-2)] hover:text-[var(--text)]"
+                )}
+              >
+                PDF View
+              </button>
+            </div>
+          )}
+
+          {/* Zoom Toolbar (Only in HTML view) */}
+          {viewMode === "html" && (
+            <div className="hidden xs:flex items-center bg-[var(--surface)] border border-[var(--line)] rounded-[var(--r-pill)] p-0.5 gap-0.5">
+              <button
+                onClick={handleZoomOut}
+                aria-label="Zoom out"
+                title="Zoom out (-)"
+                className="p-1 sm:p-1.5 rounded-full hover:bg-[var(--surface-2)] text-[var(--text-2)] hover:text-[var(--text)] transition-colors cursor-pointer"
+              >
+                <ZoomOut className="w-3.5 h-3.5" />
+              </button>
               <button
                 onClick={handleResetZoom}
-                aria-label="Reset zoom"
-                title="Reset zoom"
-                className="p-1 sm:p-1.5 rounded-full hover:bg-[var(--surface-2)] text-[var(--teal)] transition-colors cursor-pointer"
+                title="Reset zoom (0)"
+                className="px-1.5 py-0.5 font-mono text-[11px] font-medium text-[var(--text-2)] hover:text-[var(--text)] transition-colors cursor-pointer min-w-[42px] text-center"
               >
-                <RotateCcw className="w-3 h-3" />
+                {Math.round(zoom * 100)}%
               </button>
-            )}
-          </div>
+              <button
+                onClick={handleZoomIn}
+                aria-label="Zoom in"
+                title="Zoom in (+)"
+                className="p-1 sm:p-1.5 rounded-full hover:bg-[var(--surface-2)] text-[var(--text-2)] hover:text-[var(--text)] transition-colors cursor-pointer"
+              >
+                <ZoomIn className="w-3.5 h-3.5" />
+              </button>
+              {zoom !== 1 && (
+                <button
+                  onClick={handleResetZoom}
+                  aria-label="Reset zoom"
+                  title="Reset zoom"
+                  className="p-1 sm:p-1.5 rounded-full hover:bg-[var(--surface-2)] text-[var(--teal)] transition-colors cursor-pointer"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                </button>
+              )}
+            </div>
+          )}
 
           {/* Action Trigger */}
           {activeTab === "cv" ? (
@@ -229,8 +268,53 @@ function DocumentationModalContent({
       {/* ─── Scrollable & Zoomable Document Viewer Sheet ─── */}
       <div
         ref={containerRef}
-        className="flex-1 w-full overflow-auto bg-[#181d20] p-3 sm:p-8 flex justify-center items-start"
+        className={cn(
+          "flex-1 w-full overflow-auto bg-[#181d20] flex justify-center",
+          viewMode === "pdf" ? "p-2 sm:p-4 items-stretch" : "p-3 sm:p-8 items-start"
+        )}
       >
+        {viewMode === "pdf" ? (
+          <div className="w-full h-full flex flex-col items-center justify-center">
+            <object
+              key={`${activeTab}-pdf`}
+              data={`${activeTab === "cv" ? site.cv : site.recommendation}#toolbar=1&navpanes=0&view=FitH`}
+              type="application/pdf"
+              className="w-full h-[76vh] sm:h-[82vh] rounded-xl border border-[var(--line)] shadow-2xl bg-white"
+            >
+              <embed
+                src={`${activeTab === "cv" ? site.cv : site.recommendation}#toolbar=1&navpanes=0&view=FitH`}
+                type="application/pdf"
+                className="w-full h-full rounded-xl"
+              />
+              <div className="flex flex-col items-center justify-center p-8 text-center text-[var(--text-2)] gap-4 bg-[var(--surface-2)] rounded-xl border border-[var(--line)]">
+                <FileText className="w-12 h-12 text-[var(--teal)]" />
+                <div>
+                  <p className="font-semibold text-[var(--text)] text-sm mb-1">
+                    Direct PDF preview is not supported by your browser.
+                  </p>
+                  <p className="text-xs text-[var(--text-2)]">
+                    You can switch to <strong className="text-[var(--teal)]">Web View</strong> above or download the file directly.
+                  </p>
+                </div>
+                <div className="flex items-center gap-3 mt-2">
+                  <button
+                    onClick={() => setViewMode("html")}
+                    className="px-4 py-1.5 rounded-[var(--r-pill)] bg-[var(--teal)] text-[#061215] font-mono text-xs font-bold cursor-pointer"
+                  >
+                    Switch to Web View
+                  </button>
+                  <a
+                    href={activeTab === "cv" ? site.cv : site.recommendation}
+                    download={activeTab === "cv" ? "Brian_Maina_Kuria_CV.pdf" : "Brian_OAG_Recomendation.pdf"}
+                    className="px-4 py-1.5 rounded-[var(--r-pill)] border border-[var(--line)] font-mono text-xs font-semibold text-[var(--text)] hover:bg-[var(--surface)] cursor-pointer"
+                  >
+                    Download File
+                  </a>
+                </div>
+              </div>
+            </object>
+          </div>
+        ) : (
         <div
           style={{
             transform: `scale(${zoom})`,
@@ -818,6 +902,7 @@ function DocumentationModalContent({
             </div>
           )}
         </div>
+        )}
       </div>
     </motion.div>
   )
