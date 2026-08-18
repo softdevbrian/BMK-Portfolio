@@ -20,6 +20,19 @@ export const timeline: TimelineItem[] = [
     ],
   },
   {
+    period: "May 2026 — Aug 2026",
+    title: "ICT Attachment",
+    org: "Office of the Attorney General & Department of Justice · Nairobi, Kenya",
+    points: [
+      "Managed the institutional ICT helpdesk for the State Law Office and Department of Justice, resolving user hardware, software, and network support requests.",
+      "Configured and troubleshot local area network (LAN) and Internet infrastructure devices to maintain high departmental uptime.",
+      "Administered Active Directory user accounts, group policies, and permissions on MS-Windows Server Domain.",
+      "Installed and configured operating systems, endpoint antivirus protections, and user programs across staff workstations.",
+      "Carried out preventive maintenance and minor repairs of ICT equipment and managed network printers.",
+      "Executed institutional data backup, recovery routines, and supported digitization and data entry initiatives for public records.",
+    ],
+  },
+  {
     period: "2024 — Present",
     title: "Full-Stack System Architect & Independent Engineer",
     org: "Production Systems Delivery",
@@ -30,7 +43,7 @@ export const timeline: TimelineItem[] = [
     ],
   },
   {
-    period: "Expected July 2026",
+    period: "Expected Nov 2026",
     title: "BSc Software Development",
     org: "KCA University · Nairobi, Kenya",
     points: [

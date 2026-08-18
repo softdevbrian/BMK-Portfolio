@@ -1,10 +1,9 @@
 import type { Metadata } from "next"
-import { ArrowUpRight, Award, Compass, HeartHandshake, Terminal } from "lucide-react"
+import { Award, Compass, HeartHandshake, Terminal } from "lucide-react"
 import { site } from "@/data/site"
 import { Reveal } from "@/components/fx/Reveal"
 import { SectionHeading } from "@/components/ui/SectionHeading"
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder"
-import { Button } from "@/components/ui/Button"
+import { AboutProfileCard } from "@/components/sections/AboutProfileCard"
 import { Timeline } from "@/components/sections/Timeline"
 import { SkillsGrid } from "@/components/sections/SkillsGrid"
 
@@ -31,58 +30,7 @@ export default function AboutPage() {
         {/* 2-Column Main Layout: Sticky Left Image / Info + Right Prose */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mt-8">
           {/* Sticky Left Column */}
-          <div className="lg:col-span-4 lg:sticky lg:top-28 flex flex-col gap-6">
-            <Reveal direction="scale" delay={0.1}>
-              <div className="p-2 rounded-[var(--r-xl)] glass border border-[var(--line-strong)]">
-                <ImagePlaceholder
-                  src="/images/passport.png"
-                  alt={site.name}
-                  label="Brian Maina Kuria (800x800)"
-                  aspect="square"
-                  objectPosition="center 15%"
-                  ringGlow
-                  priority
-                />
-              </div>
-            </Reveal>
-
-            {/* Quick Profile Meta Card */}
-            <Reveal direction="up" delay={0.2}>
-              <div className="glass rounded-[var(--r-lg)] p-5 border border-[var(--line)] flex flex-col gap-3 text-xs">
-                <div className="flex justify-between items-center py-1.5 border-b border-[var(--line)]">
-                  <span className="font-mono text-[var(--text-2)] uppercase">Role</span>
-                  <span className="font-medium text-[var(--text)] font-heading">{site.role}</span>
-                </div>
-                <div className="flex justify-between items-center py-1.5 border-b border-[var(--line)]">
-                  <span className="font-mono text-[var(--text-2)] uppercase">Location</span>
-                  <span className="font-medium text-[var(--text)] font-heading">{site.location}</span>
-                </div>
-                <div className="flex justify-between items-center py-1.5 border-b border-[var(--line)]">
-                  <span className="font-mono text-[var(--text-2)] uppercase">Education</span>
-                  <span className="font-medium text-[var(--text)] font-heading">BSc Software Dev (KCA)</span>
-                </div>
-                <div className="flex justify-between items-center py-1.5 border-b border-[var(--line)]">
-                  <span className="font-mono text-[var(--text-2)] uppercase">Status</span>
-                  <span className="text-[var(--ok)] font-mono flex items-center gap-1.5 font-semibold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--ok)] animate-pulse" />
-                    Available for Roles
-                  </span>
-                </div>
-                <div className="pt-2">
-                  <Button
-                    href={site.cv}
-                    variant="outline"
-                    size="sm"
-                    external
-                    rightIcon={<ArrowUpRight className="w-3.5 h-3.5" />}
-                    className="w-full"
-                  >
-                    Download Curriculum Vitae
-                  </Button>
-                </div>
-              </div>
-            </Reveal>
-          </div>
+          <AboutProfileCard />
 
           {/* Right Column: Prose & Timeline */}
           <div className="lg:col-span-8 flex flex-col gap-12">

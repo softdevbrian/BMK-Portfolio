@@ -1,6 +1,8 @@
 "use client"
 
-import { ArrowDown, ArrowUpRight, Mail, MapPin, Sparkles, Terminal, Layers } from "lucide-react"
+import { useState } from "react"
+import dynamic from "next/dynamic"
+import { ArrowDown, Mail, MapPin, Sparkles, Terminal, Layers, FileText } from "lucide-react"
 import { site } from "@/data/site"
 import { SplitText } from "@/components/fx/SplitText"
 import { ScrambleText } from "@/components/fx/ScrambleText"
@@ -11,7 +13,13 @@ import { Button } from "@/components/ui/Button"
 import { GithubIcon } from "@/components/ui/Icon"
 import { motion } from "motion/react"
 
+const CvModal = dynamic(
+  () => import("@/components/ui/CvModal").then((mod) => mod.CvModal),
+  { ssr: false }
+)
+
 export function Hero() {
+  const [docModalOpen, setDocModalOpen] = useState(false)
   return (
     <section className="relative min-h-[calc(100vh-6rem)] flex flex-col justify-center items-center py-12 md:py-20">
       <div className="wrap w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -73,13 +81,12 @@ export function Hero() {
 
               <MagneticButton>
                 <Button
-                  href={site.cv}
+                  onClick={() => setDocModalOpen(true)}
                   variant="secondary"
                   size="lg"
-                  external
-                  rightIcon={<ArrowUpRight className="w-4 h-4" />}
+                  rightIcon={<FileText className="w-4 h-4 text-[var(--teal)]" />}
                 >
-                  Download CV
+                  View Documentation
                 </Button>
               </MagneticButton>
             </div>
@@ -180,6 +187,9 @@ export function Hero() {
           <ArrowDown className="w-4 h-4 text-[var(--teal)]" />
         </motion.div>
       </div>
+
+      {/* Documentation Modal */}
+      <CvModal isOpen={docModalOpen} onClose={() => setDocModalOpen(false)} />
     </section>
   )
 }

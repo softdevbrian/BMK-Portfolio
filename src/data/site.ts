@@ -8,6 +8,7 @@ export const site = {
   phoneSecondary: "+254716919124",
   github: "https://github.com/softdevbrian",
   cv: "/Brian_Maina_Kuria_CV.pdf",
+  recommendation: "/Brian_OAG_Recomendation.pdf",
   emailjs: {
     publicKey: "0hkz3VV1ycjsOVbuD",
     serviceId: "service_h90hjdq",
