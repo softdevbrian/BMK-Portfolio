@@ -16,6 +16,9 @@ import {
   AlertTriangle,
   Lightbulb,
   Layers,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
 } from "lucide-react"
 import { type Project } from "@/data/projects"
 import { Reveal } from "@/components/fx/Reveal"
@@ -41,6 +44,7 @@ export function ProjectDetailClient({
 }: ProjectDetailClientProps) {
   const [openChallengeIndex, setOpenChallengeIndex] = useState<number | null>(0)
   const [activeLightboxIndex, setActiveLightboxIndex] = useState<number | null>(null)
+  const [zoomLevel, setZoomLevel] = useState<number>(1)
 
   const activeLightboxShot =
     activeLightboxIndex !== null && project.shots && project.shots[activeLightboxIndex]
@@ -76,6 +80,7 @@ export function ProjectDetailClient({
 
   const handlePrevShot = (e: React.MouseEvent) => {
     e.stopPropagation()
+    setZoomLevel(1)
     if (totalShots === 0) return
     setActiveLightboxIndex((prev) =>
       prev !== null && prev > 0 ? prev - 1 : totalShots - 1
@@ -84,10 +89,39 @@ export function ProjectDetailClient({
 
   const handleNextShot = (e: React.MouseEvent) => {
     e.stopPropagation()
+    setZoomLevel(1)
     if (totalShots === 0) return
     setActiveLightboxIndex((prev) =>
       prev !== null && prev < totalShots - 1 ? prev + 1 : 0
     )
+  }
+
+  const handleZoomIn = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setZoomLevel((prev) => Math.min(prev + 0.5, 3))
+  }
+
+  const handleZoomOut = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setZoomLevel((prev) => Math.max(prev - 0.5, 1))
+  }
+
+  const handleResetZoom = (e?: React.MouseEvent) => {
+    e?.stopPropagation()
+    setZoomLevel(1)
+  }
+
+  const toggleZoom = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setZoomLevel((prev) => (prev > 1 ? 1 : 2))
+  }
+
+  const handleWheelZoom = (e: React.WheelEvent) => {
+    if (e.deltaY < 0) {
+      setZoomLevel((prev) => Math.min(prev + 0.25, 3))
+    } else if (e.deltaY > 0) {
+      setZoomLevel((prev) => Math.max(prev - 0.25, 1))
+    }
   }
 
   return (
@@ -435,28 +469,88 @@ export function ProjectDetailClient({
               {/* Main Lightbox Content Container */}
               <div
                 onClick={(e) => e.stopPropagation()}
+                onWheel={handleWheelZoom}
                 className={cn(
                   "relative flex flex-col items-center gap-3 cursor-default p-2",
                   activeLightboxShot.aspect === "phone"
-                    ? "h-[78vh] max-h-[82vh] aspect-[9/16] w-auto max-w-[90vw]"
-                    : "w-full max-w-4xl max-h-[80vh]"
+                    ? "h-[84vh] max-h-[88vh] aspect-[9/16] w-auto max-w-[94vw]"
+                    : "w-full max-w-6xl xl:max-w-7xl max-w-[94vw] h-[82vh] sm:h-[86vh]"
                 )}
               >
-                <div className="w-full h-full rounded-[var(--r-lg)] overflow-hidden glass p-2 border border-[var(--line-strong)] flex items-center justify-center">
-                  <ImagePlaceholder
-                    src={activeLightboxShot.src}
-                    alt={activeLightboxShot.caption}
-                    label={activeLightboxShot.caption}
-                    aspect={activeLightboxShot.aspect}
-                    fitMode="contain"
-                    objectPosition="center"
-                    className="w-full h-full"
-                  />
+                {/* Image Frame with Zoom & Pan */}
+                <div
+                  onClick={toggleZoom}
+                  className={cn(
+                    "w-full h-full rounded-[var(--r-lg)] overflow-hidden glass p-2 border border-[var(--line-strong)] flex items-center justify-center relative select-none",
+                    zoomLevel > 1 ? "cursor-grab active:cursor-grabbing" : "cursor-zoom-in"
+                  )}
+                >
+                  <motion.div
+                    drag={zoomLevel > 1}
+                    dragConstraints={{
+                      left: -350 * (zoomLevel - 1),
+                      right: 350 * (zoomLevel - 1),
+                      top: -250 * (zoomLevel - 1),
+                      bottom: 250 * (zoomLevel - 1),
+                    }}
+                    dragElastic={0.1}
+                    animate={{ scale: zoomLevel }}
+                    transition={{ type: "spring", stiffness: 300, damping: 28 }}
+                    className="w-full h-full flex items-center justify-center"
+                  >
+                    <ImagePlaceholder
+                      src={activeLightboxShot.src}
+                      alt={activeLightboxShot.caption}
+                      label={activeLightboxShot.caption}
+                      aspect={activeLightboxShot.aspect}
+                      fitMode="contain"
+                      objectPosition="center"
+                      className="w-full h-full pointer-events-none"
+                    />
+                  </motion.div>
                 </div>
-                <div className="flex items-center gap-2 shrink-0">
+
+                {/* Footer Toolbar: Caption + Zoom Controls + Shot Counter */}
+                <div className="flex flex-wrap items-center justify-center gap-2.5 shrink-0 z-50">
                   <p className="font-mono text-xs sm:text-sm text-[var(--text)] bg-[var(--surface)] px-4 py-1.5 rounded-full border border-[var(--line)]">
                     {activeLightboxShot.caption}
                   </p>
+
+                  {/* Floating Zoom Control Bar */}
+                  <div className="flex items-center gap-1 bg-[var(--surface)]/90 backdrop-blur-md px-2.5 py-1 rounded-full border border-[var(--line)] shadow-lg">
+                    <button
+                      onClick={handleZoomOut}
+                      disabled={zoomLevel <= 1}
+                      aria-label="Zoom Out"
+                      title="Zoom Out (-)"
+                      className="p-1 rounded-full hover:bg-[var(--surface-2)] text-[var(--text-2)] hover:text-[var(--text)] disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
+                    >
+                      <ZoomOut className="w-3.5 h-3.5" />
+                    </button>
+                    <span className="font-mono text-[11px] text-[var(--text-2)] px-1.5 min-w-[42px] text-center font-medium select-none">
+                      {Math.round(zoomLevel * 100)}%
+                    </span>
+                    <button
+                      onClick={handleZoomIn}
+                      disabled={zoomLevel >= 3}
+                      aria-label="Zoom In"
+                      title="Zoom In (+)"
+                      className="p-1 rounded-full hover:bg-[var(--surface-2)] text-[var(--text-2)] hover:text-[var(--text)] disabled:opacity-30 disabled:hover:bg-transparent transition-colors cursor-pointer"
+                    >
+                      <ZoomIn className="w-3.5 h-3.5" />
+                    </button>
+                    {zoomLevel > 1 && (
+                      <button
+                        onClick={handleResetZoom}
+                        aria-label="Reset Zoom"
+                        title="Reset to 100%"
+                        className="p-1 rounded-full hover:bg-[var(--surface-2)] text-[var(--teal)] transition-colors ml-0.5 cursor-pointer"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+
                   {totalShots > 1 && (
                     <span className="font-mono text-xs text-[var(--teal)] bg-[var(--surface-2)] px-3 py-1.5 rounded-full border border-[var(--line)] font-semibold">
                       {(activeLightboxIndex ?? 0) + 1} / {totalShots}

@@ -175,7 +175,7 @@ export const projects: Project[] = [
       { group: "Database & Infra", items: ["MySQL", "cPanel / Phusion Passenger"] }
     ],
     links: [
-      { label: "Live Site", href: "https://masharikiafricafoundation.org/", kind: "live" }
+      { label: "GitHub Repository", href: "https://github.com/softdevbrian/TFMS", kind: "repo" }
     ],
     cover: "/images/projects/tfms/cover.png",
     shots: [
@@ -228,14 +228,13 @@ export const projects: Project[] = [
       { group: "Deployment", items: ["Vercel", "Turbopack"] }
     ],
     links: [
-      { label: "Live Demo", href: "https://finance-tracker-ukk3.vercel.app/", kind: "live" },
-      { label: "GitHub Repository", href: "https://github.com/StaticBuilder/Finance_Tracker.git", kind: "repo" }
+      { label: "Live Demo", href: "https://finance-tracker-fawn-ten.vercel.app/", kind: "live" }
     ],
     cover: "/images/projects/finance-tracker/cover.png",
     shots: [
-      { src: "/images/projects/finance-tracker/shot-01.png", caption: "Multi-Timeframe Budget Allocation Dashboard", aspect: "wide" },
-      { src: "/images/projects/finance-tracker/shot-02.png", caption: "Heuristic Risk Analysis & Financial Insights", aspect: "wide" },
-      { src: "/images/projects/finance-tracker/shot-03.png", caption: "One-Click A4 PDF Financial Report Generation", aspect: "wide" }
+      { src: "/images/projects/finance-tracker/shot-01.png", caption: "The Main Dashboard — Real-Time Wealth Cockpit", aspect: "wide" },
+      { src: "/images/projects/finance-tracker/shot-02.png", caption: "Analytics & Reports — Advanced Visual Intelligence", aspect: "wide" },
+      { src: "/images/projects/finance-tracker/shot-03.png", caption: "Budget Allocations & Theme Customizer — Personalized Budget Control", aspect: "wide" }
     ]
   }
 ]
