@@ -165,34 +165,32 @@ function DocumentationModalContent({
         </div>
 
         {/* Action & Zoom Controls */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0 ml-auto">
-          {/* View Format Switcher (Only shown if browser supports inline PDF viewing) */}
-          {supportsPdf && (
-            <div className="flex items-center gap-1 p-0.5 rounded-[var(--r-pill)] bg-[var(--surface)] border border-[var(--line)]">
-              <button
-                onClick={() => setViewMode("html")}
-                className={cn(
-                  "px-2.5 sm:px-3 py-1 rounded-[var(--r-pill)] font-mono text-[11px] font-semibold transition-colors cursor-pointer",
-                  viewMode === "html"
-                    ? "bg-[var(--teal)] text-[#061215] shadow-[0_0_8px_rgba(45,212,191,0.3)]"
-                    : "text-[var(--text-2)] hover:text-[var(--text)]"
-                )}
-              >
-                Web View
-              </button>
-              <button
-                onClick={() => setViewMode("pdf")}
-                className={cn(
-                  "px-2.5 sm:px-3 py-1 rounded-[var(--r-pill)] font-mono text-[11px] font-semibold transition-colors cursor-pointer",
-                  viewMode === "pdf"
-                    ? "bg-[var(--teal)] text-[#061215] shadow-[0_0_8px_rgba(45,212,191,0.3)]"
-                    : "text-[var(--text-2)] hover:text-[var(--text)]"
-                )}
-              >
-                PDF View
-              </button>
-            </div>
-          )}
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0 ml-auto">
+          {/* View Format Switcher (Always visible on all screen sizes) */}
+          <div className="flex items-center gap-0.5 p-0.5 rounded-[var(--r-pill)] bg-[var(--surface)] border border-[var(--line)]">
+            <button
+              onClick={() => setViewMode("html")}
+              className={cn(
+                "px-2 sm:px-2.5 py-1 rounded-[var(--r-pill)] font-mono text-[10px] sm:text-[11px] font-semibold transition-colors cursor-pointer",
+                viewMode === "html"
+                  ? "bg-[var(--teal)] text-[#061215] shadow-[0_0_8px_rgba(45,212,191,0.3)]"
+                  : "text-[var(--text-2)] hover:text-[var(--text)]"
+              )}
+            >
+              Web View
+            </button>
+            <button
+              onClick={() => setViewMode("pdf")}
+              className={cn(
+                "px-2 sm:px-2.5 py-1 rounded-[var(--r-pill)] font-mono text-[10px] sm:text-[11px] font-semibold transition-colors cursor-pointer",
+                viewMode === "pdf"
+                  ? "bg-[var(--teal)] text-[#061215] shadow-[0_0_8px_rgba(45,212,191,0.3)]"
+                  : "text-[var(--text-2)] hover:text-[var(--text)]"
+              )}
+            >
+              PDF View
+            </button>
+          </div>
 
           {/* Zoom Toolbar (Only in HTML view) */}
           {viewMode === "html" && (
