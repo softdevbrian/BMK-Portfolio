@@ -57,9 +57,6 @@ export function Navbar() {
             <span className="font-heading font-bold text-sm tracking-tight text-[var(--text)] group-hover:text-[var(--accent-text)] transition-colors">
               {site.name}
             </span>
-            <span className="font-mono text-[10px] text-[var(--text-2)] hidden sm:block">
-              {site.role.split("&")[0].trim()}
-            </span>
           </div>
         </Link>
 

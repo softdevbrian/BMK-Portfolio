@@ -37,7 +37,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://briankuria.dev"),
   title: {
-    default: `${site.name} | ${site.role}`,
+    default: site.name,
     template: `%s | ${site.name}`,
   },
   description: `${site.name} — ${site.role} based in ${site.location}. Building high-performance, scalable web, mobile, and AI products.`,
