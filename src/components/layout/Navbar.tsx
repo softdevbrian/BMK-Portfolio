@@ -47,18 +47,24 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Measure actual rendered navbar height dynamically
+  // Measure the navbar's bottom edge from the viewport top (accounts for scroll & padding changes)
   useEffect(() => {
     if (!headerRef.current) return
     const measure = () => {
       if (headerRef.current) {
-        setNavbarHeight(headerRef.current.getBoundingClientRect().height)
+        setNavbarHeight(headerRef.current.getBoundingClientRect().bottom)
       }
     }
     measure()
+    // Re-measure on resize (e.g. orientation change)
     const observer = new ResizeObserver(measure)
     observer.observe(headerRef.current)
-    return () => observer.disconnect()
+    // Re-measure on every scroll so the menu top tracks the shrinking navbar
+    window.addEventListener("scroll", measure, { passive: true })
+    return () => {
+      observer.disconnect()
+      window.removeEventListener("scroll", measure)
+    }
   }, [])
 
   // Scroll lock with scrollbar compensation when mobile menu opens
