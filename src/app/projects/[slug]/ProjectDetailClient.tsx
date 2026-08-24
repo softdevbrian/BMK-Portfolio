@@ -215,9 +215,20 @@ export function ProjectDetailClient({
 
       {/* Quantifiable Impact Metrics Bar */}
       {project.metrics && project.metrics.length > 0 && (
-        <section className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-6 rounded-[var(--r-xl)] glass border border-[var(--line)]">
+        <section
+          className={cn(
+            "grid gap-4 p-6 rounded-[var(--r-xl)] glass border border-[var(--line)] items-center",
+            project.metrics.length === 3
+              ? "grid-cols-1 sm:grid-cols-3"
+              : project.metrics.length === 2
+              ? "grid-cols-1 sm:grid-cols-2"
+              : project.metrics.length === 1
+              ? "grid-cols-1"
+              : "grid-cols-2 sm:grid-cols-4"
+          )}
+        >
           {project.metrics.map((metric, mIdx) => (
-            <Reveal key={mIdx} direction="up" delay={0.1 * mIdx}>
+            <Reveal key={mIdx} direction="up" delay={0.1 * mIdx} className="w-full">
               <Stat
                 value={metric.value}
                 label={metric.label}

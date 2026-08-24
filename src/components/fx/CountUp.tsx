@@ -22,13 +22,14 @@ export function CountUp({
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true, margin: "-10% 0px" })
 
+  const hasNumbers = typeof value === "number" || /[0-9]/.test(String(value))
   // Parse numeric value if string passed (e.g. "50", "99.9", "1000")
-  const numericValue = typeof value === "number" ? value : parseFloat(value.replace(/[^0-9.]/g, "")) || 0
+  const numericValue = typeof value === "number" ? value : parseFloat(String(value).replace(/[^0-9.]/g, "")) || 0
   const isDecimal = Number.isInteger(numericValue) ? 0 : 1
   const [displayValue, setDisplayValue] = useState(0)
 
   useEffect(() => {
-    if (isInView) {
+    if (isInView && hasNumbers) {
       const controls = animate(0, numericValue, {
         duration,
         ease: EASING,
@@ -39,7 +40,17 @@ export function CountUp({
 
       return () => controls.stop()
     }
-  }, [isInView, numericValue, duration])
+  }, [isInView, numericValue, duration, hasNumbers])
+
+  if (!hasNumbers) {
+    return (
+      <span ref={ref} className={className} suppressHydrationWarning>
+        {prefix}
+        {value}
+        {suffix}
+      </span>
+    )
+  }
 
   return (
     <span ref={ref} className={className} suppressHydrationWarning>

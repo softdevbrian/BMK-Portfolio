@@ -57,7 +57,7 @@ export const projects: Project[] = [
     metrics: [
       { label: "Play Store Downloads", value: "1000", suffix: "+" },
       { label: "Platform Layer Model", value: "4", suffix: "-Tier" },
-      { label: "School Deployment", value: "Live", suffix: " in Kenya" }
+      { label: "School Deployment", value: "1", suffix: " in Kenya" }
     ],
     stack: [
       { group: "Mobile", items: ["Flutter 3.x", "Dart", "Android", "iOS", "Play Console"] },
