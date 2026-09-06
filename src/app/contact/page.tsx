@@ -29,7 +29,7 @@ export default function ContactPage() {
           {/* ===== CONTENT SLOT: contact-intro ===== */}
           <Reveal direction="up" delay={0.15}>
             <p className="text-sm sm:text-base text-[var(--text-2)] max-w-2xl -mt-6 mb-8 leading-relaxed">
-              I am currently open to CTO and Full-Stack Engineering roles, architectural consultations,
+              I am currently open to Mobile Lead and Full-Stack Engineering roles, architectural consultations,
               and select contract product builds. Send a message using the form below or reach out directly.
             </p>
           </Reveal>

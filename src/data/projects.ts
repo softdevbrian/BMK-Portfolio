@@ -27,7 +27,7 @@ export const projects: Project[] = [
     title: "CBC AI — AI Infrastructure Platform for Schools",
     tagline: "Production AI platform turning everyday Kenyan school operations into structured context to cut teacher workload and personalize learning.",
     ownership: "Partnered",
-    role: "Co-Developer & CTO, Mobile Lead",
+    role: "Co-Developer & Mobile Lead",
     period: "2023 – Present",
     status: "Live in Production (1,000+ Downloads)",
     featured: true,

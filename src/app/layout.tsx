@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   description: `${site.name} — ${site.role} based in ${site.location}. Building high-performance, scalable web, mobile, and AI products.`,
   keywords: [
     "Brian Maina Kuria",
-    "CTO",
+    "Mobile Lead",
     "Full-Stack Engineer",
     "Product Engineer",
     "Next.js",

@@ -49,7 +49,7 @@ export default function AboutPage() {
 
               <Reveal direction="up" delay={0.2}>
                 <p className="text-base text-[var(--text-2)] leading-relaxed">
-                  I am a CTO and full-stack product engineer who ships robust software solutions from concept through production. As Co-architect of CBC AI, an AI infrastructure platform for Kenyan schools live in production with 1,000+ Play Store downloads, I own the mobile application layer end to end. I have independently designed, built, and deployed three additional production systems across mobile, web, real-money M-Pesa payments, and offline P2P networking.
+                  I am a full-stack product engineer who ships robust software solutions from concept through production. As Mobile Lead for the CBC AI Platform at Bombay Softwares, I own the mobile application layer end to end for a production AI education platform used daily by Kenyan schools — architecture, design system, state management, API integration and Play Store release engineering — co-developed with a partner engineering team (1,000+ installs). I have independently designed, built, and deployed three additional production systems across mobile, web, real-money M-Pesa payments, and offline P2P networking.
                 </p>
               </Reveal>
             </section>
@@ -157,7 +157,7 @@ export default function AboutPage() {
 
               <Reveal direction="up" delay={0.2}>
                 <p className="text-sm sm:text-base text-[var(--text-2)] leading-relaxed">
-                  Serving as CTO of an EdTech startup while completing my BSc in Software Development at KCA University has honed my ability to navigate high-stakes production pressures, lead technical architectures, and balance product vision with pragmatic engineering execution.
+                  Serving as Mobile Lead for the CBC AI Platform at Bombay Softwares while completing my BSc in Software Development at KCA University has honed my ability to navigate production delivery pressures, architect cross-platform mobile systems, and coordinate engineering execution with partner teams.
                 </p>
               </Reveal>
             </section>

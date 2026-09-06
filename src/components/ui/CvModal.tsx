@@ -330,7 +330,7 @@ function DocumentationModalContent({
                   BRIAN KURIA MAINA
                 </h1>
                 <p className="text-base sm:text-lg font-bold text-[#1B5E9E] dark:text-[#8FBEF0] m-0 mb-2">
-                  CTO &amp; Full-Stack Product Engineer
+                  Full-Stack Product Engineer · Mobile · Backend · Payments
                 </p>
                 <p className="text-xs sm:text-sm text-[#7D7A75] dark:text-[#9ca3af] m-0 mb-3 font-medium">
                   AI Platforms <span className="text-[#d1d5db] dark:text-[#4b5563] px-1.5">·</span> Flutter Mobile{" "}
@@ -410,11 +410,11 @@ function DocumentationModalContent({
                   Professional Summary
                 </h2>
                 <p className="text-xs sm:text-sm leading-relaxed text-[#5c5a56] dark:text-[#d1d5db] m-0">
-                  CTO and full-stack product engineer who ships production systems end to end — mobile, backend, data and
-                  deployment. Co-architect of <strong className="text-[#1a1a1a] dark:text-[#ffffff]">CBC AI</strong>, an
-                  AI infrastructure platform for Kenyan schools now live in production with{" "}
-                  <strong className="text-[#1a1a1a] dark:text-[#ffffff]">1,000+ Play Store downloads</strong>, where I own
-                  the mobile application layer. Independently designed, built and deployed three further production systems:
+                  Full-stack product engineer who ships production systems end to end — mobile, backend, data and
+                  deployment. Mobile Lead for <strong className="text-[#1a1a1a] dark:text-[#ffffff]">CBC AI</strong>, an
+                  AI education platform for Kenyan schools live in production with{" "}
+                  <strong className="text-[#1a1a1a] dark:text-[#ffffff]">1,000+ Play Store downloads</strong>, owning
+                  the mobile application layer end to end. Independently designed, built and deployed three further production systems:
                   a real-money{" "}
                   <strong className="text-[#1a1a1a] dark:text-[#ffffff]">
                     M-Pesa B2C payroll and farm ERP (151k+ lines, live)
@@ -530,12 +530,12 @@ function DocumentationModalContent({
                   Experience
                 </h2>
 
-                {/* Experience Item 1: CTO */}
+                {/* Experience Item 1: Mobile Lead */}
                 <div className="mb-5">
                   <p className="text-sm sm:text-base font-bold text-[#1a1a1a] dark:text-[#ffffff] m-0">
-                    Chief Technology Officer{" "}
+                    Mobile Lead{" "}
                     <span className="font-normal text-[#7D7A75] dark:text-[#9ca3af]">
-                      — Bombay Softwares · Nairobi, Kenya
+                      — CBC AI Platform, Bombay Softwares, Nairobi
                     </span>
                   </p>
                   <p className="text-xs sm:text-sm italic text-[#7D7A75] dark:text-[#9ca3af] m-0 mt-0.5 mb-2.5">
@@ -543,10 +543,10 @@ function DocumentationModalContent({
                   </p>
                   <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-[#5c5a56] dark:text-[#d1d5db] marker:text-[#2783DE]">
                     <li>
-                      Set technical direction for an EdTech startup building{" "}
-                      <strong className="text-[#1a1a1a] dark:text-[#ffffff]">AI infrastructure for schools</strong>, not
-                      point-solution school software — every workflow is designed to generate educational context that AI can
-                      reason over.
+                      Own the <strong className="text-[#1a1a1a] dark:text-[#ffffff]">mobile application layer end to end</strong> for
+                      a production AI education platform used daily by Kenyan schools — architecture, design system, state
+                      management, API integration and Play Store release engineering — co-developed with a partner engineering
+                      team (1,000+ installs).
                     </li>
                     <li>
                       Co-developed the <strong className="text-[#1a1a1a] dark:text-[#ffffff]">CBC AI Platform</strong>{" "}
@@ -628,7 +628,7 @@ function DocumentationModalContent({
                     CBC AI — AI Infrastructure Platform for Schools
                   </h3>
                   <p className="text-xs italic text-[#7D7A75] dark:text-[#9ca3af] m-0 mb-1">
-                    🏫 Partnered product · Role: Co-developer &amp; CTO, mobile lead · Live in production · 1,000+ downloads
+                    🏫 Partnered product · Role: Co-developer &amp; Mobile Lead · Live in production · 1,000+ downloads
                   </p>
                   <p className="text-xs text-[#5c5a56] dark:text-[#cbd5e1] m-0 mb-1.5">
                     <b className="text-[#1a1a1a] dark:text-[#ffffff]">Stack:</b> Flutter · Dart · Django REST Framework ·
@@ -812,8 +812,8 @@ function DocumentationModalContent({
                 </h2>
                 <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-[#5c5a56] dark:text-[#d1d5db] marker:text-[#2783DE]">
                   <li>
-                    <strong className="text-[#1a1a1a] dark:text-[#ffffff]">CTO of an EdTech startup</strong> while completing
-                    an undergraduate degree, co-owning an AI platform live in Kenyan schools.
+                    <strong className="text-[#1a1a1a] dark:text-[#ffffff]">Mobile Lead for CBC AI</strong> while completing
+                    an undergraduate degree, owning the mobile delivery of a production AI platform live in Kenyan schools.
                   </li>
                   <li>
                     <strong className="text-[#1a1a1a] dark:text-[#ffffff]">Shipped two apps to the Google Play Store</strong>,

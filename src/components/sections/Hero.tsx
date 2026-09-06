@@ -31,7 +31,7 @@ export function Hero() {
             <Reveal direction="up" delay={0.05}>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[var(--r-pill)] glass border border-[var(--line-strong)] mb-2">
                 <span className="w-2 h-2 rounded-full bg-[var(--teal)] animate-pulse shadow-[0_0_8px_var(--teal)]" />
-                <span className="eyebrow">CTO & Full-Stack Product Engineer</span>
+                <span className="eyebrow">Full-Stack Product Engineer · Mobile · Backend · Payments</span>
               </div>
             </Reveal>
           </div>
@@ -153,8 +153,8 @@ export function Hero() {
                   <Sparkles className="w-3.5 h-3.5" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-mono text-[var(--text-2)] uppercase">Startup Leadership</span>
-                  <span className="text-xs font-semibold text-[var(--text)]">CTO @ Bombay Softwares</span>
+                  <span className="text-[10px] font-mono text-[var(--text-2)] uppercase">Mobile Leadership</span>
+                  <span className="text-xs font-semibold text-[var(--text)]">Mobile Lead @ Bombay Softwares</span>
                 </div>
               </motion.div>
 

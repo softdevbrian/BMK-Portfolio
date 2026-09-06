@@ -25,11 +25,13 @@ export function ScrambleText({
   const timerRef = useRef<NodeJS.Timeout | null>(null)
 
   const startScramble = useCallback(() => {
-    if (isAnimatingRef.current) return
+    if (timerRef.current) {
+      clearInterval(timerRef.current)
+      timerRef.current = null
+    }
+
     isAnimatingRef.current = true
     iterationRef.current = 0
-
-    if (timerRef.current) clearInterval(timerRef.current)
 
     timerRef.current = setInterval(() => {
       setDisplayText(() => {
@@ -46,19 +48,30 @@ export function ScrambleText({
       })
 
       if (iterationRef.current >= text.length) {
-        if (timerRef.current) clearInterval(timerRef.current)
+        if (timerRef.current) {
+          clearInterval(timerRef.current)
+          timerRef.current = null
+        }
         isAnimatingRef.current = false
         setDisplayText(text)
       }
 
-      iterationRef.current += 1 / 3
+      iterationRef.current += 0.8
     }, speed)
   }, [text, characters, speed])
 
   useEffect(() => {
-    startScramble()
+    const timeout = setTimeout(() => {
+      startScramble()
+    }, 250)
+
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current)
+      clearTimeout(timeout)
+      if (timerRef.current) {
+        clearInterval(timerRef.current)
+        timerRef.current = null
+      }
+      isAnimatingRef.current = false
     }
   }, [startScramble])
 

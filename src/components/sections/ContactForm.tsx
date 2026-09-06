@@ -276,7 +276,7 @@ export function ContactForm() {
             id="subject"
             name="subject"
             required
-            placeholder="Project inquiry / CTO role / Technical consultation"
+            placeholder="Project inquiry / Mobile Lead role / Technical consultation"
             value={values.subject}
             onChange={handleChange}
             onBlur={handleBlur}

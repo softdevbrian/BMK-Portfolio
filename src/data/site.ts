@@ -1,6 +1,6 @@
 export const site = {
   name: "Brian Maina Kuria",
-  role: "CTO & Full-Stack Product Engineer",
+  role: "Full-Stack Product Engineer",
   location: "Nairobi, Kenya",
   emailPrimary: "softdevbriankuria@gmail.com",
   emailSecondary: "briankuriamaina@gmail.com",

@@ -7,7 +7,7 @@ import { Briefcase, Calendar, CheckCircle2 } from "lucide-react"
 const defaultTimelinePlaceholder: TimelineItem[] = [
   {
     period: "2023 — Present",
-    title: "Chief Technology Officer / Lead Engineer",
+    title: "Mobile Lead / Lead Engineer",
     org: "Tech Startup / Product Studio",
     points: [
       "Led end-to-end architecture and engineering of high-throughput distributed systems.",

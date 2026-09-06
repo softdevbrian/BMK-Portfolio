@@ -9,10 +9,10 @@ export type TimelineItem = {
 export const timeline: TimelineItem[] = [
   {
     period: "2023 — Present",
-    title: "Chief Technology Officer",
-    org: "Bombay Softwares · Nairobi, Kenya",
+    title: "Mobile Lead",
+    org: "CBC AI Platform, Bombay Softwares · Nairobi, Kenya",
     points: [
-      "Set technical direction for an EdTech startup building AI infrastructure for schools, designing every workflow to generate context that AI can reason over.",
+      "Owns the mobile application layer end to end for a production AI education platform used daily by Kenyan schools — architecture, design system, state management, API integration and Play Store release engineering — co-developed with a partner engineering team (1,000+ installs).",
       "Co-developed the CBC AI Platform (cbcai.co.ke) alongside a partner team, owning the mobile application layer end to end (architecture, UI/UX, state management, API integration, release engineering, and store operations).",
       "Shipped and maintain the CBC AI Android & iOS app to production, now at 1,000+ downloads and in active daily use by Kenyan schools.",
       "Architected the app against a four-layer platform model: data collection (school workflows, hardware/IoT signals like RFID canteen payments and biometric attendance), educational intelligence (learner/teacher profiles, school knowledge graph), AI (Teacher AI, Learner AI), and measurable impact.",
@@ -48,7 +48,7 @@ export const timeline: TimelineItem[] = [
     org: "KCA University · Nairobi, Kenya",
     points: [
       "Undergraduate software development curriculum focusing on software architecture, algorithms, distributed databases, and full-stack engineering.",
-      "Combined academic studies with active startup CTO leadership and authoring over 200,000+ lines of solo production code.",
+      "Combined academic studies with active Mobile Lead engineering delivery and authoring over 200,000+ lines of solo production code.",
     ],
   },
 ]
