@@ -9,6 +9,12 @@ export const site = {
   github: "https://github.com/softdevbrian",
   cv: "/Brian_Maina_Kuria_CV.pdf",
   recommendation: "/Brian_OAG_Recomendation.pdf",
+  /**
+   * DOCUMENTATION SWITCH:
+   * Set to `false` to hide all buttons, links, and modal triggers pointing to documentation (CV & recommendation letter).
+   * Set to `true` to turn them back on.
+   */
+  showDocumentation: false as boolean,
   emailjs: {
     publicKey: "0hkz3VV1ycjsOVbuD",
     serviceId: "service_h90hjdq",

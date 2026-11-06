@@ -137,14 +137,16 @@ export function Navbar() {
           {/* CTA & Theme Controls */}
           <div className="hidden md:flex items-center gap-2.5">
             <ThemeToggle />
-            <Button
-              onClick={() => setCvModalOpen(true)}
-              variant="outline"
-              size="sm"
-              rightIcon={<FileText className="w-3.5 h-3.5 text-[var(--teal)]" />}
-            >
-              Documentation
-            </Button>
+            {site.showDocumentation && (
+              <Button
+                onClick={() => setCvModalOpen(true)}
+                variant="outline"
+                size="sm"
+                rightIcon={<FileText className="w-3.5 h-3.5 text-[var(--teal)]" />}
+              >
+                Documentation
+              </Button>
+            )}
             <Button href="/contact" variant="primary" size="sm">
               Let&apos;s Talk
             </Button>
@@ -215,18 +217,20 @@ export function Navbar() {
 
               {/* Bottom CTAs */}
               <div className="flex flex-col gap-3 pt-8 pb-6 border-t border-[var(--line)]">
-                <Button
-                  onClick={() => {
-                    setMobileMenuOpen(false)
-                    setCvModalOpen(true)
-                  }}
-                  variant="outline"
-                  size="md"
-                  rightIcon={<FileText className="w-4 h-4 text-[var(--teal)]" />}
-                  className="w-full"
-                >
-                  View Documentation
-                </Button>
+                {site.showDocumentation && (
+                  <Button
+                    onClick={() => {
+                      setMobileMenuOpen(false)
+                      setCvModalOpen(true)
+                    }}
+                    variant="outline"
+                    size="md"
+                    rightIcon={<FileText className="w-4 h-4 text-[var(--teal)]" />}
+                    className="w-full"
+                  >
+                    View Documentation
+                  </Button>
+                )}
                 <Button
                   href="/contact"
                   variant="primary"
@@ -244,7 +248,9 @@ export function Navbar() {
       )}
 
       {/* CV Preview & Download Modal */}
-      <CvModal isOpen={cvModalOpen} onClose={() => setCvModalOpen(false)} />
+      {site.showDocumentation && (
+        <CvModal isOpen={cvModalOpen} onClose={() => setCvModalOpen(false)} />
+      )}
     </>
   )
 }

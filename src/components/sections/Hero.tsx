@@ -79,16 +79,18 @@ export function Hero() {
                 </Button>
               </MagneticButton>
 
-              <MagneticButton>
-                <Button
-                  onClick={() => setDocModalOpen(true)}
-                  variant="secondary"
-                  size="lg"
-                  rightIcon={<FileText className="w-4 h-4 text-[var(--teal)]" />}
-                >
-                  View Documentation
-                </Button>
-              </MagneticButton>
+              {site.showDocumentation && (
+                <MagneticButton>
+                  <Button
+                    onClick={() => setDocModalOpen(true)}
+                    variant="secondary"
+                    size="lg"
+                    rightIcon={<FileText className="w-4 h-4 text-[var(--teal)]" />}
+                  >
+                    View Documentation
+                  </Button>
+                </MagneticButton>
+              )}
             </div>
           </Reveal>
 
@@ -189,7 +191,9 @@ export function Hero() {
       </div>
 
       {/* Documentation Modal */}
-      <CvModal isOpen={docModalOpen} onClose={() => setDocModalOpen(false)} />
+      {site.showDocumentation && (
+        <CvModal isOpen={docModalOpen} onClose={() => setDocModalOpen(false)} />
+      )}
     </section>
   )
 }

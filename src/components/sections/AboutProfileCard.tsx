@@ -54,22 +54,26 @@ export function AboutProfileCard() {
               Available for Roles
             </span>
           </div>
-          <div className="pt-2">
-            <Button
-              onClick={() => setDocModalOpen(true)}
-              variant="outline"
-              size="sm"
-              rightIcon={<FileText className="w-3.5 h-3.5 text-[var(--teal)]" />}
-              className="w-full"
-            >
-              View Documentation
-            </Button>
-          </div>
+          {site.showDocumentation && (
+            <div className="pt-2">
+              <Button
+                onClick={() => setDocModalOpen(true)}
+                variant="outline"
+                size="sm"
+                rightIcon={<FileText className="w-3.5 h-3.5 text-[var(--teal)]" />}
+                className="w-full"
+              >
+                View Documentation
+              </Button>
+            </div>
+          )}
         </div>
       </Reveal>
 
       {/* Documentation Modal */}
-      <CvModal isOpen={docModalOpen} onClose={() => setDocModalOpen(false)} />
+      {site.showDocumentation && (
+        <CvModal isOpen={docModalOpen} onClose={() => setDocModalOpen(false)} />
+      )}
     </div>
   )
 }
