@@ -35,11 +35,12 @@ export const timeline: TimelineItem[] = [
   {
     period: "2024 — Present",
     title: "Full-Stack System Architect & Independent Engineer",
-    org: "Production Systems Delivery",
+    org: "Production Systems Delivery (Oracle Cloud & Play Store)",
     points: [
-      "Independently designed and shipped Tea Farm Management System (TFMS) — a real-money M-Pesa B2C payroll and farm ERP across 151,800+ lines of Python/Django cutting payroll processing from 2–3 days to < 5 minutes.",
-      "Architected Tuko Kadi (55,650+ lines of Dart) — a console-quality offline-first P2P multiplayer card game with embedded device-hosted WebSockets, QR pairing, and 4 behavioural bot AIs.",
-      "Built and deployed Finance Tracker — a multi-timeframe financial intelligence dashboard on Neon serverless Postgres, Drizzle ORM, and an 11-scenario heuristic advisory engine.",
+      "Engineered TikitiPro — a high-concurrency transit & event ticketing engine using Redis SET NX + PostgreSQL SELECT FOR UPDATE locking, M-Pesa escrow handling, and <50ms offline Ed25519 QR verification.",
+      "Built DukaSync — an offline-first multi-tenant retail POS & van-sales platform with RFC 9562 UUIDv7 outbox sync, deadlock-free stock locking, and simulated KRA eTIMS 4-tier VAT compliance.",
+      "Co-architected Tuko Pamoja (partnered) — a multi-tenant double-entry fund accounting PWA with maker-checker workflows, ReportLab PDFs, and 247 automated tests (100% pass rate).",
+      "Shipped KejaFlow (PropTech 4-bucket M-Pesa waterfall & KRA 7.5% MRI engine), Kichele (native Kotlin real-time M-Pesa SMS overlay tracker), TFMS (Next.js 16 + Django 5.1 agricultural ERP with Daraja B2C payroll), Tuko Kadi (55k+ lines Dart P2P multiplayer game), and Uongozi-254 (47-county civic transparency platform).",
     ],
   },
   {

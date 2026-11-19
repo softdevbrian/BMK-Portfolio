@@ -77,6 +77,338 @@ export const projects: Project[] = [
     ]
   },
   {
+    slug: "tikitipro",
+    title: "TikitiPro — High-Concurrency Transit & Cryptographic Event Ticketing Engine",
+    tagline: "Multi-operator SACCO transit & event ticketing engine eliminating flash-sale double-bookings with Redis/PostgreSQL locking, M-Pesa escrow, and <50ms offline Ed25519 QR verification.",
+    ownership: "Solo",
+    role: "Lead Full-Stack Engineer & System Architect",
+    period: "2026 – Present",
+    status: "Live in Production",
+    featured: true,
+    accent: "violet",
+    categories: ["Web", "Mobile", "Payments"],
+    summary: "A full-stack, multi-operator transit SACCO and reserved-seat event ticketing platform built for high-concurrency African mobility and live venues—100% solo-architected across Django 5.1 (Daphne ASGI), Next.js 15, Redis 7, PostgreSQL 16, and Flutter 3.",
+    problem: "Flash sales on shuttles and live events frequently suffer from race-condition double-bookings when multiple passengers purchase the last seats simultaneously, while rural transit corridors lack reliable 4G connectivity for boarding ticket verification.",
+    highlights: [
+      "Prevented flash-sale double-bookings by combining Redis SET NX EX 180 atomic seat holds with PostgreSQL SELECT FOR UPDATE row locks and partial unique constraints (0 double-bookings across 50 concurrent competing threads).",
+      "Built an interactive 50-Buyer Concurrency Arena and real-time SVG cabin maps (14-seater RHD matatus, 33-seater coaches, 24-seat VIP grids) powered by Django Channels WebSockets.",
+      "Engineered <50ms pure-Dart offline ticket verification in Flutter using asymmetric Ed25519 signatures (cached 32-byte public key) and a local append-only scan ledger blocking screenshot replay attacks.",
+      "Solved M-Pesa Daraja 3.0 late-callback races via LATE_ESCROW_CREDIT quarantine so expired holds bought by another passenger are never overwritten and resolve cleanly via Next-Shuttle Vouchers or B2C reversals.",
+      "Delivered a multi-SACCO marketplace with a 5-tab Platform Superadmin Console, Operator Dispatch Console, Brevo SMTP 6-digit OTP recovery, and passwordless passenger ticket lookup."
+    ],
+    challenges: [
+      {
+        title: "Zero Double-Bookings Under Flash-Sale Concurrency",
+        problem: "When 50+ buyers request the last 2 seats on a Nairobi-Nakuru shuttle at the exact same millisecond, naive check-then-insert queries allow multiple buyers to pay for the same seat.",
+        solution: "Layered a 180-second Redis SET NX distributed lock ahead of PostgreSQL SELECT FOR UPDATE transactional row locking and a partial unique index (uniq_active_or_confirmed_seat_per_trip), returning HTTP 409 Conflict to losing threads."
+      },
+      {
+        title: "Offline Conductor Verification Without Forgery Risk",
+        problem: "Highway transit conductors lose 4G coverage mid-route, yet storing symmetric HMAC secrets on a mobile app allows ticket forgery if a device is stolen.",
+        solution: "Signed ticket payloads on the backend with a private Ed25519 key (v1|ticket|trip|seat|phone4|unix|key_id.sig) and embedded only the 32-byte public key in the Flutter app for <50ms offline verification and idempotent outbox sync."
+      }
+    ],
+    metrics: [
+      { label: "Double-Bookings (50 Threads)", value: "0", suffix: " Races" },
+      { label: "Offline QR Verification", value: "50", prefix: "<", suffix: " ms" },
+      { label: "Seat Hold Window", value: "180", suffix: " sec" },
+      { label: "Platform Architecture", value: "3", suffix: "-Stack" }
+    ],
+    stack: [
+      { group: "Backend & Real-Time", items: ["Django 5.1", "DRF", "Daphne ASGI", "Django Channels", "Ed25519 Cryptography"] },
+      { group: "Data & Locking", items: ["PostgreSQL 16", "Redis 7 (SET NX)", "SELECT FOR UPDATE"] },
+      { group: "Frontend Web", items: ["Next.js 15 (App Router)", "React 19", "TypeScript", "Tailwind CSS v4"] },
+      { group: "Mobile & Infra", items: ["Flutter 3", "Brevo SMTP", "Nginx Reverse Proxy", "Oracle Cloud ARM64"] }
+    ],
+    links: [
+      { label: "Live Production Site", href: "https://tikitipro.duckdns.org", kind: "live" },
+      { label: "API Docs (Swagger)", href: "https://tikitipro.duckdns.org/api/docs/", kind: "demo" }
+    ],
+    cover: "/images/projects/tikitipro/cover.png",
+    shots: [
+      { src: "/images/projects/tikitipro/shot-01.png", caption: "Interactive SVG Cabin Map & M-Pesa Checkout Stub", aspect: "wide" },
+      { src: "/images/projects/tikitipro/shot-02.png", caption: "50-Buyer Concurrency Arena (0 Double-Bookings, 48 Conflicts Blocked)", aspect: "wide" },
+      { src: "/images/projects/tikitipro/shot-03.png", caption: "M-Pesa Late Callback Escrow & USSD *384*77# Simulator", aspect: "wide" }
+    ]
+  },
+  {
+    slug: "dukasync",
+    title: "DukaSync — Offline-First Multi-Tenant Retail POS, Van-Sales & KRA eTIMS Platform",
+    tagline: "Offline-first retail POS and van-sales platform with RFC 9562 UUIDv7 sync queues, deadlock-free stock locking, and simulated KRA eTIMS 4-tier VAT compliance.",
+    ownership: "Solo",
+    role: "Lead Full-Stack Engineer & System Architect",
+    period: "2026 – Present",
+    status: "Live in Production",
+    featured: true,
+    accent: "amber",
+    categories: ["Web", "Mobile", "Payments"],
+    summary: "A full-stack, multi-tenant offline-first Point of Sale (POS), inventory ledger, and fiscal compliance platform built for Kenyan hardware depots, wholesale distributors, and rural delivery vans across Django 5, Next.js 15, and Flutter 3.",
+    problem: "Cloud-only POS tools freeze during Safaricom 4G or fiber blackouts, forcing cashiers onto paper books, while naive offline sync replays cause duplicate stock deductions or overwrite concurrent branch inventory.",
+    highlights: [
+      "Built local-first checkout across Next.js IndexedDB and Flutter sqflite using time-ordered RFC 9562 UUIDv7 idempotency keys to commit sales offline and print provisional 80mm thermal receipts immediately.",
+      "Engineered deadlock-free batch synchronization in Django using deterministic SKU sorting inside transaction.atomic() before acquiring select_for_update() row locks on BranchInventory.",
+      "Designed zero-revenue-loss conflict handling: competing offline oversells commit both paid receipts and raise an auditable StockConflictIncident workflow for Store Managers to reconcile.",
+      "Implemented simulated KRA eTIMS OSCU fiscalization across 4 Kenyan VAT tiers (16%, 8%, 0%, Exempt) with HMAC-SHA256 signatures, deterministic QR payloads, and M-Pesa till reconciliation.",
+      "Enforced strict multi-tenant SaaS isolation across 5 RBAC roles (OWNER, STORE_MANAGER, CASHIER, VAN_SALES, ACCOUNTANT) with Brevo SMTP OTP verification and an ENABLE_DEMO_LOGIN sandbox toggle."
+    ],
+    challenges: [
+      {
+        title: "Deadlock-Free Batch Sync & Idempotent Retries",
+        problem: "Retrying flaky HTTP batch syncs can deduct stock twice, while concurrent multi-item baskets updating overlapping SKUs risk PostgreSQL row-lock deadlocks.",
+        solution: "Assigned client-generated UUIDv7 client_tx_id keys checked for idempotency prior to mutation, and sorted all line-item SKUs deterministically before acquiring select_for_update() locks."
+      },
+      {
+        title: "Competing Offline Oversells Without Dropping Paid Sales",
+        problem: "Two disconnected tablets may sell the final unit of a SKU concurrently during an internet blackout; rejecting the second receipt after cash or M-Pesa changed hands creates ledger discrepancies.",
+        solution: "Committed both valid financial sales to the immutable StockMovement ledger and automatically spawned a StockConflictIncident for manager resolution via recount, backorder, or credit note."
+      }
+    ],
+    metrics: [
+      { label: "Offline Continuity", value: "100", suffix: "%" },
+      { label: "Kenyan VAT Tiers", value: "4", suffix: " Rates" },
+      { label: "Tenant RBAC Roles", value: "5", suffix: " Roles" },
+      { label: "Receipt Format", value: "80", suffix: "mm eTIMS" }
+    ],
+    stack: [
+      { group: "Backend & Sync", items: ["Django 5.1", "DRF", "PostgreSQL 16", "select_for_update()", "RFC 9562 UUIDv7"] },
+      { group: "Web POS", items: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS v4", "IndexedDB"] },
+      { group: "Mobile & Van", items: ["Flutter 3", "Dart", "sqflite", "CustomPainter Thermal Receipts"] },
+      { group: "Fiscal & Ops", items: ["KRA eTIMS Sim", "M-Pesa Daraja 3.0 Sim", "Brevo SMTP", "Oracle Cloud ARM64"] }
+    ],
+    links: [
+      { label: "Live Production Site", href: "https://dukasync.duckdns.org", kind: "live" },
+      { label: "API Docs (Swagger)", href: "https://dukasync.duckdns.org/api/docs/", kind: "demo" }
+    ],
+    cover: "/images/projects/dukasync/cover.png",
+    shots: [
+      { src: "/images/projects/dukasync/shot-01.png", caption: "Offline-First POS Register & Provisional eTIMS Receipt", aspect: "wide" },
+      { src: "/images/projects/dukasync/shot-02.png", caption: "Inventory Balances, Split-Pane GRN Builder & Stock Ledger", aspect: "wide" },
+      { src: "/images/projects/dukasync/shot-03.png", caption: "Multi-Device Offline Stock Conflict Resolution Workbench", aspect: "wide" }
+    ]
+  },
+  {
+    slug: "tuko-pamoja",
+    title: "Tuko Pamoja — Multi-Tenant Double-Entry Fund Accounting & Membership Platform",
+    tagline: "Audit-grade multi-tenant community finance platform with ring-fenced funds, maker-checker workflows, and 247 automated tests.",
+    ownership: "Partnered",
+    role: "Co-Architect & Full-Stack Engineer",
+    period: "2026 – Present",
+    status: "Live in Production (247 Tests Passing)",
+    featured: true,
+    accent: "sky",
+    categories: ["Web", "Payments"],
+    summary: "An enterprise-grade, multi-tenant community financial management and double-entry fund accounting Progressive Web App (PWA) engineered for chamas, welfare associations, and cooperative groups.",
+    problem: "Savings groups and welfare associations often commingle funds in informal spreadsheets with zero separation of duties, lost audit trails, and insecure handling of sensitive member claim records.",
+    highlights: [
+      "Built an audit-compliant double-entry ledger ring-fencing designated funds (Welfare, Emergency, Sinking) with automatic member obligation allocation and available credit tracking.",
+      "Enforced Maker-Checker separation of duties at the API layer so officers recording receipts or drafting expense payouts cannot independently verify or finalize their own entries.",
+      "Engineered a two-phase bulk CSV roster importer executing complete relational validation and duplicate checks with zero database writes on preview, followed by an atomic commit.",
+      "Created a high-precision ReportLab PDF engine (two-pass NumberedCanvas 'Page X of Y', repeated headers) and OpenPyXL Excel exporter with spreadsheet formula injection defense.",
+      "Maintained a 100% pass rate across 247 automated tests (178 Django backend tests + 69 Vitest frontend tests) with immutable audit logging and memory-stored JWT + HttpOnly cookie auth."
+    ],
+    challenges: [
+      {
+        title: "Preventing Single-Officer Financial Manipulation",
+        problem: "In small savings groups, allowing one treasurer to both record cash/M-Pesa receipts and mark them as verified creates a major fraud and audit vulnerability.",
+        solution: "Implemented API-enforced Maker-Checker state machines requiring a second independent officer to verify inflows against bank/M-Pesa statements and confirm expense disbursements before ledger posting."
+      },
+      {
+        title: "Safe Bulk Member Onboarding & Formula-Safe Exports",
+        problem: "Uploading large community CSV rosters risks partial dirty writes on invalid rows, while exporting user-entered strings to Excel exposes accountants to CSV formula injection.",
+        solution: "Separated roster import into a zero-mutation validation preview and an @transaction.atomic commit phase, and dynamically escaped leading =, +, -, and @ characters in all XLSX/CSV exports."
+      }
+    ],
+    metrics: [
+      { label: "Automated Tests", value: "247", suffix: " Passed" },
+      { label: "Test Pass Rate", value: "100", suffix: "%" },
+      { label: "Financial Integrity", value: "2", suffix: "-Entry Ledger" },
+      { label: "Control Standard", value: "2", suffix: "-Person Rule" }
+    ],
+    stack: [
+      { group: "Backend & Ledger", items: ["Django 5", "DRF 3.15", "Python 3.13", "PostgreSQL", "Django-Q2"] },
+      { group: "Frontend PWA", items: ["React 18/19", "TypeScript", "Vite 5", "Workbox PWA", "Vitest"] },
+      { group: "Reporting & Security", items: ["ReportLab 5.1", "OpenPyXL", "HttpOnly Refresh JWT", "Immutable Audit Log"] },
+      { group: "Deployment", items: ["Oracle Cloud ARM64", "Nginx", "Gunicorn", "PM2", "Brevo SMTP"] }
+    ],
+    links: [
+      { label: "Live Production Site", href: "https://tukopamoja.duckdns.org", kind: "live" },
+      { label: "1-Click Interactive Demo", href: "https://tukopamoja.duckdns.org/login/", kind: "demo" }
+    ],
+    cover: "/images/projects/tuko-pamoja/cover.png",
+    shots: [
+      { src: "/images/projects/tuko-pamoja/shot-01.png", caption: "Pamoja QA Welfare Admin Workspace & Contribution Plans", aspect: "wide" },
+      { src: "/images/projects/tuko-pamoja/shot-02.png", caption: "Maker-Checker Expenses & Disbursements Workflow", aspect: "wide" },
+      { src: "/images/projects/tuko-pamoja/shot-03.png", caption: "Community Financial Reports & Excel Export Engine", aspect: "wide" }
+    ]
+  },
+  {
+    slug: "kejaflow",
+    title: "KejaFlow — Automated Kenyan PropTech, Water Billing & M-Pesa Rental Ledger",
+    tagline: "End-to-end rental property ledger with a 4-bucket atomic M-Pesa waterfall, KRA 7.5% MRI tax separation, and offline basement water meter capture.",
+    ownership: "Solo",
+    role: "Lead Full-Stack Engineer & System Architect",
+    period: "2026 – Present",
+    status: "Live in Production",
+    featured: false,
+    accent: "teal",
+    categories: ["Web", "Mobile", "Payments"],
+    summary: "An automated property management, utility sub-metering, and rental reconciliation platform built for Kenyan apartment blocks ('plots') across Django 5.1, Next.js 15, and Flutter 3.",
+    problem: "Kenyan landlords struggle with ambiguous partial M-Pesa Paybill payments, caretakers losing paper water meter logs in zero-signal basements, and overpaying KRA's 7.5% Monthly Rental Income tax on pass-through utility reimbursements.",
+    highlights: [
+      "Engineered a 4-bucket atomic M-Pesa waterfall (Prior Arrears -> Water & Garbage -> Current Base Rent -> Prepaid Credit) protected by select_for_update() row locks and unique mpesa_receipt constraints.",
+      "Built a KRA 7.5% MRI tax engine automatically separating tax-exempt utility reimbursements from taxable rent, paired with zero-dependency @media print A4 eTIMS tenant statements.",
+      "Delivered a visual floor-by-floor Plot Matrix (A1-D6) with live standing indicators (Paid, Partial, Overdue, Vacant), slide-over unit drawers, and dynamic plot/floor/unit builders.",
+      "Shipped a Flutter 3 companion app with an idempotent SharedPreferences outbox queue (clientSyncId) for Caretaker basement water meter walks and a Tenant Passbook with STK Express checkout.",
+      "Enforced strict RBAC isolation across LANDLORD, CARETAKER, and TENANT workspaces alongside an opt-in 1-click sandbox demo and Brevo SMTP password recovery."
+    ],
+    challenges: [
+      {
+        title: "Ambiguous Partial M-Pesa Payments & Concurrent Callbacks",
+        problem: "Tenants frequently pay irregular amounts via Paybill, and duplicate or concurrent Safaricom webhooks can double-credit unit balances.",
+        solution: "Locked unit rows with select_for_update() inside transaction.atomic() to drain obligations deterministically across 4 waterfall buckets while enforcing UNIQUE constraints on mpesa_receipt."
+      },
+      {
+        title: "Zero-Signal Basement Water Metering",
+        problem: "Caretakers reading sub-meters in concrete basements lose mobile connectivity, causing lost logs and billing disputes.",
+        solution: "Built an offline-first Flutter Plot Walk outbox persisting readings locally with deterministic KF-SYNC keys and flushing idempotently via /api/v1/water-readings/bulk-sync/."
+      }
+    ],
+    metrics: [
+      { label: "Waterfall Priority", value: "4", suffix: "-Bucket" },
+      { label: "KRA Tax Engine", value: "7.5", suffix: "% MRI" },
+      { label: "Role Portals", value: "3", suffix: " Workspaces" },
+      { label: "Client Surfaces", value: "2", suffix: " (Web+App)" }
+    ],
+    stack: [
+      { group: "Backend & Tasks", items: ["Django 5.1", "DRF", "Celery", "Redis", "PostgreSQL", "drf-spectacular"] },
+      { group: "Web Portal", items: ["Next.js 15 (App Router)", "React 19", "TypeScript", "Tailwind CSS v4", "PWA"] },
+      { group: "Mobile Companion", items: ["Flutter 3", "Dart 3", "Material 3", "SharedPreferences Outbox"] },
+      { group: "FinTech & Infra", items: ["Daraja 3.0 Sim", "KRA eTIMS Stamps", "Brevo SMTP", "Oracle Cloud ARM64"] }
+    ],
+    links: [
+      { label: "Live Production Site", href: "https://kejaflow.duckdns.org", kind: "live" },
+      { label: "1-Click Demo Sandbox", href: "https://kejaflow.duckdns.org/login", kind: "demo" },
+      { label: "API Docs (Swagger)", href: "https://kejaflow.duckdns.org/api/docs/", kind: "live" }
+    ],
+    cover: "/images/projects/kejaflow/cover.png",
+    shots: [
+      { src: "/images/projects/kejaflow/shot-01.png", caption: "Unit Slide-Over Drawer: 4-Bucket Balance & Water Meter Proof", aspect: "wide" },
+      { src: "/images/projects/kejaflow/shot-02.png", caption: "Atomic Reconciliation Ledger & KRA 7.5% MRI Tax Engine", aspect: "wide" },
+      { src: "/images/projects/kejaflow/shot-03.png", caption: "Caretaker Water Meter Studio & Audit Log", aspect: "wide" }
+    ]
+  },
+  {
+    slug: "kichele",
+    title: "Kichele (Pesa Mirror) — Offline-First M-Pesa Personal Finance Tracker for Android",
+    tagline: "Privacy-preserving Android finance tracker intercepting M-Pesa SMS in real time via native Kotlin, featuring a 1-tap floating categorization overlay and 100% on-device SQLite.",
+    ownership: "Solo",
+    role: "Sole Mobile, Native Android & Full-Stack Engineer",
+    period: "2026 – Present",
+    status: "Live Showcase & APK Release (v1.0.2+3)",
+    featured: false,
+    accent: "sky",
+    categories: ["Mobile", "Web", "Payments"],
+    summary: "An offline-first, privacy-preserving M-Pesa personal finance ledger for Android (Flutter 3 + Native Kotlin + SQLite) paired with a Next.js 15 product showcase and Django 5 release API.",
+    problem: "Kenyan M-Pesa users accumulate hundreds of unstructured SMS receipts with buried transaction fees, multi-SIM confusion, and sensitive account balances exposed on lock screens—while refusing to upload financial data to third-party clouds.",
+    highlights: [
+      "Engineered a native Android Kotlin BroadcastReceiver and foreground SmsListenerService with an offline PendingSmsStore queue to intercept M-Pesa SMS in real time even when the Flutter engine is closed.",
+      "Built a system-wide FloatingOverlayService (WindowManager) card that pops up immediately upon transaction arrival with a recency-sorted, flow-aware 1-tap category pill strip writing straight to native SQLite.",
+      "Implemented privacy-first balance protection: masked balances (Ksh••••••) by default, tap-to-reveal with auto-hide on app switch, and a 14px BackdropFilter frosted-glass SMS inspector.",
+      "Added Dual-SIM subscription auto-discovery and internal self-transfer isolation (neither flow bucket) plus Fuliza overdraft separation and Money Lost to Fees analytics.",
+      "Shipped a matching Next.js 15 showcase website with an interactive simulated phone demo and a Django 5 release metadata API serving signed APK updates via Nginx zero-copy streaming."
+    ],
+    challenges: [
+      {
+        title: "Real-Time SMS Categorization When App Process Is Killed",
+        problem: "Standard Flutter Dart listeners stop executing when Android kills the background engine, dropping incoming M-Pesa notifications and preventing instant categorization.",
+        solution: "Dropped down into native Kotlin to build a BroadcastReceiver, foreground service, PendingSmsStore disk queue, and WindowManager floating overlay that commits categories directly to sqflite."
+      },
+      {
+        title: "Accurate Cash Flow Across Dual-SIM & Fuliza Transactions",
+        problem: "Moving money between a user's personal and business SIMs—or drawing Fuliza overdrafts—falsely inflates monthly income and expense totals in standard trackers.",
+        solution: "Auto-discovered SIM subscription IDs to classify self-transfers and Fuliza loan drawdowns under a dedicated 'neither' cash-flow bucket while isolating transaction tariffs into a Fees audit."
+      }
+    ],
+    metrics: [
+      { label: "Cloud Data Uploads", value: "0", suffix: " (100% Local)" },
+      { label: "APK Release", value: "1.0.2", prefix: "v", suffix: "+3" },
+      { label: "Balance Protection", value: "14", suffix: "px Blur + Mask" },
+      { label: "Categorization UX", value: "1", suffix: "-Tap Overlay" }
+    ],
+    stack: [
+      { group: "Android & Mobile", items: ["Flutter 3", "Dart", "Native Kotlin", "WindowManager Overlay", "sqflite"] },
+      { group: "Showcase Web", items: ["Next.js 15", "React 19", "TypeScript", "Interactive Phone Demo"] },
+      { group: "Release Backend", items: ["Django 5", "DRF", "PostgreSQL 16", "SHA-256 Checksum API"] },
+      { group: "Cloud Hosting", items: ["Oracle Cloud ARM64", "Nginx sendfile (2 MB/s limit)", "PM2", "Systemd"] }
+    ],
+    links: [
+      { label: "Live Showcase Site", href: "https://kichele.duckdns.org", kind: "live" },
+      { label: "Download Android APK", href: "https://kichele.duckdns.org/downloads/Kichele.apk", kind: "store" }
+    ],
+    cover: "/images/projects/kichele/cover.png",
+    shots: [
+      { src: "/images/projects/kichele/shot-01.png", caption: "M-Pesa SMS-to-SQLite Pipeline Inspector (Fuliza & Fee Extraction)", aspect: "wide" },
+      { src: "/images/projects/kichele/shot-02.png", caption: "Privacy-First Features: Floating Overlay, Masked Balances & Dual-SIM", aspect: "wide" },
+      { src: "/images/projects/kichele/shot-03.png", caption: "Direct Android APK v1.0.2+3 Release, SHA-256 & Permissions", aspect: "wide" }
+    ]
+  },
+  {
+    slug: "tfms",
+    title: "Tea Farm Management System (TFMS) — Enterprise Agricultural ERP",
+    tagline: "Commercial tea estate operations, agronomic intelligence, 7-logic payroll engine, and Safaricom Daraja M-Pesa B2C wage disbursements across 59 Next.js routes.",
+    ownership: "Solo",
+    role: "Lead Full-Stack Engineer & System Architect",
+    period: "Sept 2025 – Present",
+    status: "Live in Production",
+    featured: false,
+    accent: "teal",
+    categories: ["Web", "Payments"],
+    summary: "An enterprise agricultural operations and financial management platform rebuilt on Next.js 16 (React 19, Turbopack), Django 5.1 REST Framework, and PostgreSQL 16—automating estate agronomy, weighbridge integrity, 7-model payroll, and direct M-Pesa B2C worker payouts.",
+    problem: "Commercial tea estates historically relied on paper tally books, physical weighbridge chits, and risky cash-in-transit wage payouts—causing leaf weight disputes, payroll errors, and 2–3 day disbursement delays.",
+    highlights: [
+      "Re-architected into a decoupled Next.js 16 (59 App Router routes, glassmorphic UI) + Django 5.1 DRF Service-Selector backend secured by HttpOnly SameSite JWT cookies.",
+      "Built an agronomic sectioning engine categorizing estate blocks by tea clone (TRFK 306, Clone 31/8), slope, bush density, and digital weighbridge receipt slips with moisture/tare deductions.",
+      "Engineered a dynamic 7-logic payroll engine (fixed, per-kg, threshold commissions, task bonuses, and blended models) with immutable historical rate snapshots and OpenPyXL styled Excel reports.",
+      "Integrated Safaricom Daraja M-Pesa B2C SalaryPayment disbursements with idempotent asynchronous webhook handlers, cutting estate payroll turnaround to under 5 minutes.",
+      "Created a Virtual Time Manipulation Engine for testing 14-day plucking intervals and payroll cycle closures, alongside an ENABLE_DEMO_MODE 1-click switcher for Owner, Manager, and Worker portals."
+    ],
+    challenges: [
+      {
+        title: "Immutable Compensation Across Changing Seasonal Rates",
+        problem: "Adjusting per-kg plucking rates or daily threshold quotas mid-season can retroactively corrupt historical worker earnings in active pay cycles.",
+        solution: "Built DecimalField payroll calculation services in apps.finance that freeze point-in-time rate snapshots onto each WorkerPaymentPeriod before M-Pesa B2C dispatch."
+      },
+      {
+        title: "Multi-Tenant Daraja B2C Webhooks & Dual-Server Orchestration",
+        problem: "Safaricom B2C asynchronous callbacks require unambiguous origin matching without risking cross-estate ledger collisions or duplicate payouts.",
+        solution: "Decoupled thin views from pure business services (apps.mpesa), validating OriginatorConversationID idempotently before transitioning balances and auditing 30+ backend test cases."
+      }
+    ],
+    metrics: [
+      { label: "Payroll Turnaround", value: "5", prefix: "<", suffix: " min" },
+      { label: "App Router Pages", value: "59", suffix: " Routes" },
+      { label: "Payroll Models", value: "7", suffix: " Logics" },
+      { label: "Role Portals", value: "4", suffix: "-Tier RBAC" }
+    ],
+    stack: [
+      { group: "Frontend Web", items: ["Next.js 16.4 (Turbopack)", "React 19", "TypeScript 5", "Tailwind CSS", "Lucide"] },
+      { group: "Backend API", items: ["Python 3.13", "Django 5.1.7", "DRF 3.15", "SimpleJWT (HttpOnly)", "OpenPyXL"] },
+      { group: "Payments & Comms", items: ["Safaricom Daraja M-Pesa B2C", "Brevo Email API", "Virtual Time Engine"] },
+      { group: "Database & Cloud", items: ["PostgreSQL 16", "Nginx SNI + Certbot", "Gunicorn", "PM2", "Oracle Cloud ARM64"] }
+    ],
+    links: [
+      { label: "Live Production Site", href: "https://tfms.duckdns.org", kind: "live" },
+      { label: "1-Click Demo Login", href: "https://tfms.duckdns.org/login", kind: "demo" },
+      { label: "GitHub Repository", href: "https://github.com/softdevbrian/TFMS", kind: "repo" }
+    ],
+    cover: "/images/projects/tfms/cover.png",
+    shots: [
+      { src: "/images/projects/tfms/shot-01.png", caption: "Estate Intelligence, Recharts Yield Trend & OpenPyXL Exports", aspect: "wide" },
+      { src: "/images/projects/tfms/shot-02.png", caption: "Agronomic Sectioning & Clone/Block Profiles (TRFK 306)", aspect: "wide" },
+      { src: "/images/projects/tfms/shot-03.png", caption: "Estate Finance Engine & Safaricom Daraja M-Pesa B2C Integration", aspect: "wide" }
+    ]
+  },
+  {
     slug: "tuko-kadi",
     title: "Tuko Kadi — Offline-First P2P Multiplayer Card Game",
     tagline: "Console-quality mobile adaptation of Kenyan card game Kadi with zero-infrastructure embedded WebSocket P2P multiplayer.",
@@ -84,7 +416,7 @@ export const projects: Project[] = [
     role: "Sole Engineer & Game Architect",
     period: "May 2026 – Aug 2026",
     status: "Shipped v1.0.0+12",
-    featured: true,
+    featured: false,
     accent: "violet",
     categories: ["Mobile", "AI"],
     summary: "A console-quality mobile adaptation of the Kenyan card game Kadi, playable with zero internet and zero backend cost across 55,650+ lines of Dart and 294+ commits, 100% solo-owned.",
@@ -131,110 +463,58 @@ export const projects: Project[] = [
     ]
   },
   {
-    slug: "tfms",
-    title: "Tea Farm Management System (TFMS) — Agricultural ERP",
-    tagline: "Agricultural ERP with Safaricom Daraja M-Pesa B2C real-money payouts and automated harvest-to-wage reconciliation.",
+    slug: "uongozi-254",
+    title: "Uongozi-254 — Kenyan Civic Information & Leadership Transparency Platform",
+    tagline: "Nonpartisan Kenyan civic transparency PWA covering 1,788 IEBC jurisdictions and 1,885 elective seats with privacy-preserving GPS lookup and audited editorial publishing.",
     ownership: "Solo",
-    role: "Lead Full-Stack Engineer & System Architect",
-    period: "Sept 2025 – Present",
-    status: "Live in Production",
-    featured: true,
-    accent: "sky",
-    categories: ["Web", "Payments"],
-    summary: "A full farm ERP replacing paper ledgers, phone coordination, and cash payouts with automated harvest weighing and M-Pesa B2C disbursements across 151,800+ lines of Python and Django, 100% solo-owned.",
-    problem: "Tea estate operations relied on manual paper records and risky physical cash payouts, causing payroll calculations to take 2-3 business days with high error rates, manual entry overhead, and scheduling conflicts.",
-    highlights: [
-      "Cut payroll calculation and wage disbursement from 2–3 business days to under 5 minutes through automated harvest weight -> piece-rate wage -> M-Pesa B2C pipeline.",
-      "Integrated Safaricom Daraja M-Pesa B2C for one-click wage, contractor, and supply disbursements with 100% automated reconciliation against internal ledgers.",
-      "Solved multi-tenant webhook routing by minting dynamic callback URLs with embedded farm IDs at dispatch and matching OriginatorConversationID in idempotent handlers.",
-      "Built 4-tier RBAC (SuperAdmin, Farm Owner, Farm Manager, Field Worker) with conflict-detecting task scheduler preventing double-booked shifts.",
-      "Delivered operational suite: harvest weighing logs (gross/tare/net kg with quality deductions), worker clock-in/out, inventory tracking, and dynamic Excel exports."
-    ],
-    challenges: [
-      {
-        title: "Multi-Tenant Webhook Routing with Stateless Callbacks",
-        problem: "Safaricom B2C callback payloads carry no application context or tenant identification, risking cross-tenant transaction collision.",
-        solution: "Minted dynamic callback URLs with embedded farm identifiers during dispatch, paired with idempotent handlers writing immutable ledger entries."
-      },
-      {
-        title: "Production Timezone Data-Loss on Shared Hosting",
-        problem: "Django's __date lookups invoked MySQL CONVERT_TZ() against unpopulated shared-hosting timezone tables, returning NULL and blanking dashboards.",
-        solution: "Refactored date-boundary math into Python with timezone.make_aware() and exact UTC range filtering, making queries host-independent."
-      }
-    ],
-    metrics: [
-      { label: "Payroll Processing", value: "5", prefix: "<", suffix: " min" },
-      { label: "Lines of Code (Solo)", value: "151", suffix: "k+" },
-      { label: "Reconciliation", value: "100", suffix: "%" },
-      { label: "Role Portals", value: "4", suffix: "-Tier RBAC" }
-    ],
-    stack: [
-      { group: "Backend & Core", items: ["Python 3.13", "Django 5.2.6", "Gunicorn", "WhiteNoise"] },
-      { group: "Payments & Integration", items: ["Safaricom Daraja M-Pesa B2C", "Brevo Email API", "openpyxl"] },
-      { group: "Frontend", items: ["Vanilla JS (ES6+)", "Responsive CSS", "HTML5"] },
-      { group: "Database & Infra", items: ["MySQL", "cPanel / Phusion Passenger"] }
-    ],
-    links: [
-      { label: "GitHub Repository", href: "https://github.com/softdevbrian/TFMS", kind: "repo" }
-    ],
-    cover: "/images/projects/tfms/cover.png",
-    shots: [
-      { src: "/images/projects/tfms/shot-01.png", caption: "Harvest Weighing & Piece-Rate Wage Dashboard", aspect: "wide" },
-      { src: "/images/projects/tfms/shot-02.png", caption: "M-Pesa B2C Instant Disbursement Hub", aspect: "wide" },
-      { src: "/images/projects/tfms/shot-03.png", caption: "Conflict-Detecting Shift & Task Scheduler", aspect: "wide" }
-    ]
-  },
-  {
-    slug: "finance-tracker",
-    title: "Finance Tracker — Multi-Timeframe Financial Intelligence",
-    tagline: "Localized (KES) personal finance dashboard built around flexible, overlapping time periods and an 11-scenario heuristic advisory engine.",
-    ownership: "Solo",
-    role: "Lead Full-Stack Developer & UI/UX",
-    period: "Nov 2024",
-    status: "Shipped MVP",
-    featured: true,
+    role: "Full-Stack Engineer & Cloud Architect",
+    period: "2026 – Present",
+    status: "Live in Production (47 Counties Covered)",
+    featured: false,
     accent: "amber",
-    categories: ["Web", "Payments"],
-    summary: "A localized (KES) personal finance dashboard built around flexible, overlapping time periods rather than fixed calendar months, backed by serverless Postgres.",
-    problem: "Traditional budgeting apps enforce rigid calendar-month boundaries, failing users with non-standard pay cycles, overlapping budget goals, or multiple concurrent project expenses.",
+    categories: ["Web"],
+    summary: "A nonpartisan Kenyan civic-transparency platform and installable Progressive Web App (Next.js 14 + Django 5.2 + PostgreSQL 16) connecting citizens with verified public records on elected leaders and constitutional mandates.",
+    problem: "Determining which elected officials represent a specific Kenyan Ward, Constituency, or County—and verifying their official statutory mandates—typically requires piecing together scattered IEBC gazettes and county portals.",
     highlights: [
-      "Designed a normalized 5-table serverless Postgres schema (periods, period_selected, budgets, incomes, expenses) with Drizzle ORM.",
-      "Built a persistent TimeFrameProvider Context allowing concurrent weekly, monthly, yearly, and custom period aggregation without stale data.",
-      "Wrote dynamic Drizzle queries using inArray filtering and COALESCE aggregate joins for sub-second calculations.",
-      "Engineered an 11-scenario heuristic advisory engine evaluating live income/budget/spend ratios for contextual risk alerts.",
-      "Created reusable useChartExport hook capturing high-resolution charts via html2canvas and generating formatted A4 PDF reports in under a second."
+      "Engineered a hierarchical civic data engine covering 100% of Kenya's 47 Counties, 290 Constituencies, and 1,450 Wards (1,788 IEBC jurisdictions and 1,885 elective seats).",
+      "Implemented privacy-preserving 1-tap GPS reverse-geocoding via OpenStreetMap/Nominatim to match user coordinates to IEBC boundaries without storing or logging user location.",
+      "Built an audited editorial staging pipeline (ChangeProposal diffs, transactional approve/reject publishing, historical term archiving) preventing unverified scrapers from altering live records.",
+      "Created a Dual-Approval Portrait Pipeline enforcing MIME/size checks, EXIF metadata stripping, SHA-256 deduplication, and independent Identity + Reuse-License approvals.",
+      "Delivered ranked search across aliases and offices (/search), a live 47-county coverage dashboard (/coverage), citizen correction reporting with SSRF validation, and an installable PWA."
     ],
     challenges: [
       {
-        title: "Multi-Timeframe Overlapping Aggregations",
-        problem: "Aggregating budget vs spend across arbitrary overlapping date periods in real-time without stale data or hydration mismatches.",
-        solution: "Designed a persistent TimeFrameProvider React Context backed by a period_selected database table with COALESCE join queries."
+        title: "Preventing Automated Misinformation & Concurrent Incumbent Collisions",
+        problem: "Unattended data scrapers or CSV ingestion scripts can overwrite verified officeholder terms or assign two concurrent leaders to a single-seat constituency.",
+        solution: "Isolated all automated ingestion behind idempotent ChangeProposal staging records and transactional approve_proposal services that archive predecessor terms atomically."
       },
       {
-        title: "Client-Side High-Resolution Chart PDF Export",
-        problem: "Chart canvas exports suffered from container clipping, blurry pixelation, and inconsistent pagination on mobile screens.",
-        solution: "Built a custom export hook that normalizes container dimensions, captures at 3x resolution via html2canvas, and maps exact A4 landscape scaling in jsPDF."
+        title: "Privacy-Preserving Electoral GPS Matching",
+        problem: "Citizens want instant 'Use My Location' leader lookup without surrendering sensitive location telemetry to a public civic database.",
+        solution: "Processed reverse-geocoding ephemerally against hierarchical fuzzy jurisdiction matching while guaranteeing raw GPS coordinates are never logged or persisted."
       }
     ],
     metrics: [
-      { label: "Advisory Engine", value: "11", suffix: " Scenarios" },
-      { label: "Query Response", value: "150", suffix: "ms" },
-      { label: "PDF Export Time", value: "1", prefix: "<", suffix: "s" }
+      { label: "IEBC Jurisdictions", value: "1788", suffix: " Verified" },
+      { label: "Elective Seats", value: "1885", suffix: " Seeded" },
+      { label: "Counties Covered", value: "47", suffix: "/47 (100%)" },
+      { label: "Automated Tests", value: "33", suffix: "+ UI & API" }
     ],
     stack: [
-      { group: "Frontend", items: ["Next.js 15 (App Router)", "React 19", "Tailwind CSS", "Framer Motion", "Recharts"] },
-      { group: "Backend & Data", items: ["Neon Serverless PostgreSQL", "Drizzle ORM", "TypeScript"] },
-      { group: "Auth & Export", items: ["Clerk Authentication", "jsPDF", "html2canvas"] },
-      { group: "Deployment", items: ["Vercel", "Turbopack"] }
+      { group: "Backend & Data", items: ["Django 5.2", "DRF", "PostgreSQL 16", "drf-spectacular", "Pytest & Ruff"] },
+      { group: "Frontend & PWA", items: ["Next.js 14 (App Router)", "React 18", "TypeScript", "Tailwind CSS", "Jest & RTL"] },
+      { group: "Civic & Media Ops", items: ["Nominatim Reverse-Geocoding", "EXIF Stripping", "SHA-256 Portrait Pipeline"] },
+      { group: "Infrastructure", items: ["Oracle Cloud ARM64", "Nginx SNI + TLS", "Gunicorn", "PM2"] }
     ],
     links: [
-      { label: "Live Demo", href: "https://finance-tracker-fawn-ten.vercel.app/", kind: "live" }
+      { label: "Live Production Site", href: "https://uongozi254.duckdns.org", kind: "live" },
+      { label: "API Docs (Swagger)", href: "https://uongozi254.duckdns.org/api/docs/", kind: "demo" }
     ],
-    cover: "/images/projects/finance-tracker/cover.png",
+    cover: "/images/projects/uongozi-254/cover.png",
     shots: [
-      { src: "/images/projects/finance-tracker/shot-01.png", caption: "The Main Dashboard — Real-Time Wealth Cockpit", aspect: "wide" },
-      { src: "/images/projects/finance-tracker/shot-02.png", caption: "Analytics & Reports — Advanced Visual Intelligence", aspect: "wide" },
-      { src: "/images/projects/finance-tracker/shot-03.png", caption: "Budget Allocations & Theme Customizer — Personalized Budget Control", aspect: "wide" }
+      { src: "/images/projects/uongozi-254/shot-01.png", caption: "Ward-to-National Constitutional Leadership & Mandate Cards", aspect: "wide" },
+      { src: "/images/projects/uongozi-254/shot-02.png", caption: "Nationwide 47-County Seat Coverage & Source Freshness Audit", aspect: "wide" },
+      { src: "/images/projects/uongozi-254/shot-03.png", caption: "Ranked Civic Search Across Jurisdictions, Leaders & Offices", aspect: "wide" }
     ]
   }
 ]

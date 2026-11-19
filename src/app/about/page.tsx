@@ -49,7 +49,7 @@ export default function AboutPage() {
 
               <Reveal direction="up" delay={0.2}>
                 <p className="text-base text-[var(--text-2)] leading-relaxed">
-                  I am a full-stack product engineer who ships robust software solutions from concept through production. As Mobile Lead for the CBC AI Platform at Bombay Softwares, I own the mobile application layer end to end for a production AI education platform used daily by Kenyan schools — architecture, design system, state management, API integration and Play Store release engineering — co-developed with a partner engineering team (1,000+ installs). I have independently designed, built, and deployed three additional production systems across mobile, web, real-money M-Pesa payments, and offline P2P networking.
+                  I am a full-stack product engineer who ships robust software solutions from concept through production. As Mobile Lead for the CBC AI Platform at Bombay Softwares, I own the mobile application layer end to end for a production AI education platform used daily by Kenyan schools — architecture, design system, state management, API integration and Play Store release engineering — co-developed with a partner engineering team (1,000+ installs). Alongside collaborated platforms like Tuko Pamoja, I have independently designed, built, and deployed seven additional production systems across high-concurrency ticketing, offline-first POS, PropTech ledgers, native Android M-Pesa tracking, agricultural ERP, P2P networking, and civic transparency.
                 </p>
               </Reveal>
             </section>
@@ -63,17 +63,17 @@ export default function AboutPage() {
                   <span>Track Record & Systems</span>
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold font-heading text-[var(--text)]">
-                  Over 200,000+ lines of solo production code authored and shipped.
+                  9 live production systems spanning FinTech, Offline-First POS, Concurrency &amp; AI.
                 </h3>
               </Reveal>
 
               <Reveal direction="up" delay={0.2}>
                 <div className="flex flex-col gap-3 text-sm sm:text-base text-[var(--text-2)] leading-relaxed">
                   <p>
-                    My portfolio spans complex engineering domains: a real-money M-Pesa B2C payroll and farm ERP (TFMS, 151k+ lines in Python/Django) cutting wage disbursement times from 2–3 days to under 5 minutes; an offline-first P2P multiplayer card game (Tuko Kadi, 55k+ lines in Dart) running an embedded device WebSocket host and 4 behavioural bot AIs; and a multi-timeframe financial analytics dashboard (Finance Tracker) on serverless Postgres.
+                    My portfolio spans demanding engineering domains: high-concurrency seat locking and offline Ed25519 QR verification (TikitiPro); offline-first multi-tenant retail POS with UUIDv7 outbox sync and conflict resolution (DukaSync); double-entry fund accounting with 247 automated tests (Tuko Pamoja, partnered); 4-bucket atomic rental ledgers (KejaFlow); native Kotlin SMS interception with floating overlays (Kichele); an enterprise M-Pesa B2C payroll and tea estate ERP (TFMS); an offline P2P multiplayer card engine (Tuko Kadi); and a 47-county civic transparency platform (Uongozi-254).
                   </p>
                   <p>
-                    I bring a strong bias toward context-rich AI systems, zero-infrastructure architectures, and products that function reliably in low-connectivity, cost-conscious environments.
+                    I bring a strong bias toward atomic financial integrity, zero-infrastructure architectures, and resilient systems built for low-connectivity, real-world East African environments.
                   </p>
                 </div>
               </Reveal>

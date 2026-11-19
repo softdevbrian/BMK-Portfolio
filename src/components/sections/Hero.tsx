@@ -63,9 +63,10 @@ export function Hero() {
             {/* ===== CONTENT SLOT: hero-paragraph ===== */}
             <Reveal direction="up" delay={0.3}>
               <p className="text-base sm:text-lg text-[var(--text-2)] max-w-xl leading-relaxed">
-                Co-architect of CBC AI (live in Kenyan schools with 1,000+ Play Store downloads).
-                Independently designed, built and deployed three further production systems: TFMS (M-Pesa B2C payroll ERP),
-                Tuko Kadi (offline P2P multiplayer card game), and Finance Tracker. Strong bias toward context-rich AI systems and zero-infrastructure architectures.
+                Co-architect of CBC AI (live in Kenyan schools with 1,000+ Play Store downloads) and Tuko Pamoja
+                (multi-tenant double-entry fund accounting). Solo-engineered 7 additional production systems spanning
+                high-concurrency ticketing, offline-first POS, PropTech ledgers, native Android M-Pesa tracking,
+                agricultural ERP, P2P gaming, and civic transparency.
               </p>
             </Reveal>
           </div>

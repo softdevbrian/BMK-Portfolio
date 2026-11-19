@@ -7,23 +7,23 @@ export type Skill = {
 export const skills: Skill[] = [
   {
     group: "Languages",
-    items: ["Dart", "Python", "JavaScript (ES6+)", "TypeScript", "SQL"],
+    items: ["Dart", "Python", "TypeScript", "JavaScript (ES6+)", "Kotlin (Android)", "SQL"],
   },
   {
     group: "Mobile Engineering",
-    items: ["Flutter 3.x", "Cross-Platform (Android & iOS)", "Play Console Release Operations", "AdMob", "In-App Purchases / Play Billing"],
+    items: ["Flutter 3.x", "Cross-Platform (Android & iOS)", "Native Kotlin Services & Overlays", "Play Console Release Ops", "AdMob & Play Billing"],
   },
   {
     group: "Backend & Systems",
-    items: ["Django 5", "Django REST Framework", "FastAPI", "Node.js", "REST API Design", "Webhook & Callback Architecture"],
+    items: ["Django 5 / 5.2", "Django REST Framework", "Daphne ASGI & Channels", "Celery & Django-Q2", "REST & OpenAPI 3.0", "Webhook Idempotency"],
   },
   {
     group: "Frontend Architecture",
-    items: ["Next.js 15 (App Router)", "React 19", "Tailwind CSS", "Motion / Framer Motion", "Radix UI", "Recharts", "Chart.js"],
+    items: ["Next.js 14–16 (App Router)", "React 18 / 19", "Tailwind CSS v4", "Vite PWA & Workbox", "Motion / Framer Motion", "Radix UI"],
   },
   {
-    group: "Databases & ORM",
-    items: ["PostgreSQL (Neon Serverless)", "MySQL", "SQLite", "Drizzle ORM", "Django ORM", "Schema Design & Aggregations"],
+    group: "Databases & Caching",
+    items: ["PostgreSQL 16", "Redis 7 (SET NX Locking)", "SQLite (sqflite)", "Browser IndexedDB", "Django ORM", "MySQL"],
   },
   {
     group: "AI & Intelligence",
@@ -31,14 +31,14 @@ export const skills: Skill[] = [
   },
   {
     group: "Integrations & Protocols",
-    items: ["Safaricom Daraja M-Pesa B2C", "Brevo Transactional Email", "Clerk Auth", "Bulk SMS", "QR Pairing", "WebSockets"],
+    items: ["Safaricom Daraja M-Pesa (STK/C2B/B2C)", "KRA eTIMS OSCU Sim", "Ed25519 Cryptography", "Brevo SMTP", "Bulk SMS", "WebSockets & QR Pairing"],
   },
   {
     group: "DevOps & Infrastructure",
-    items: ["cPanel / Phusion Passenger", "Railway", "Vercel", "WhiteNoise", "Gunicorn", "Git & GitHub", "Flutter DevTools"],
+    items: ["Oracle Cloud ARM64", "Nginx SNI Reverse Proxy", "Gunicorn & Systemd", "PM2", "Let's Encrypt Certbot", "Git & GitHub"],
   },
   {
     group: "Engineering Practices",
-    items: ["Systems Architecture", "Deterministic State Machines", "RBAC", "Automated Simulation Testing", "Zero-Infrastructure P2P"],
+    items: ["Multi-Tenant SaaS Isolation", "Double-Entry & Maker-Checker", "Offline-First Outbox Sync", "Row-Level Locking", "Automated Simulation & Unit Testing"],
   },
 ]

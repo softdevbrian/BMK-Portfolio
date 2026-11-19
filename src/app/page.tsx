@@ -8,17 +8,17 @@ import { Reveal } from "@/components/fx/Reveal"
 
 const techStack = [
   "Flutter 3.x",
-  "Dart",
+  "Dart & Native Kotlin",
   "Python 3.13",
-  "Django 5",
-  "Next.js 15 (App Router)",
+  "Django 5 & DRF",
+  "Next.js 16 (App Router)",
   "React 19",
-  "Safaricom M-Pesa B2C",
-  "Neon Serverless Postgres",
-  "Drizzle ORM",
-  "Embedded WebSockets P2P",
-  "AI & RAG Workflows",
-  "Tailwind CSS",
+  "PostgreSQL 16",
+  "Redis 7 & WebSockets",
+  "Safaricom M-Pesa Daraja",
+  "Ed25519 Cryptography",
+  "Offline SQLite & IndexedDB",
+  "Oracle Cloud ARM64",
 ]
 
 export default function HomePage() {
