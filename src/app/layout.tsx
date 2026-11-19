@@ -35,7 +35,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://briankuria.dev"),
+  metadataBase: new URL("https://briankuria.co.ke"),
   title: {
     default: site.name,
     template: `%s | ${site.name}`,
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://briankuria.dev",
+    url: "https://briankuria.co.ke",
     title: `${site.name} | ${site.role}`,
     description: `${site.name} — ${site.role} based in ${site.location}. Architectural portfolio & production engineering work.`,
     siteName: site.name,
