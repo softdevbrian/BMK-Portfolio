@@ -40,7 +40,7 @@ export const timeline: TimelineItem[] = [
       "Engineered TikitiPro — a high-concurrency transit & event ticketing engine using Redis SET NX + PostgreSQL SELECT FOR UPDATE locking, M-Pesa escrow handling, and <50ms offline Ed25519 QR verification.",
       "Built DukaSync — an offline-first multi-tenant retail POS & van-sales platform with RFC 9562 UUIDv7 outbox sync, deadlock-free stock locking, and simulated KRA eTIMS 4-tier VAT compliance.",
       "Co-architected Tuko Pamoja (partnered) — a multi-tenant double-entry fund accounting PWA with maker-checker workflows, ReportLab PDFs, and 247 automated tests (100% pass rate).",
-      "Shipped KejaFlow (PropTech 4-bucket M-Pesa waterfall & KRA 7.5% MRI engine), Kichele (native Kotlin real-time M-Pesa SMS overlay tracker), TFMS (Next.js 16 + Django 5.1 agricultural ERP with Daraja B2C payroll), Tuko Kadi (55k+ lines Dart P2P multiplayer game), and Uongozi-254 (47-county civic transparency platform).",
+      "Shipped KejaFlow (PropTech 4-bucket M-Pesa waterfall & KRA 7.5% MRI engine), Kichele (native Kotlin real-time M-Pesa SMS overlay tracker), TFMS (Next.js 16 + Django 5.1 agricultural ERP with Daraja B2C payroll), Tuko Kadi (55k+ lines Dart P2P multiplayer game), and Uongozi-254 (partnered 47-county civic transparency platform).",
     ],
   },
   {

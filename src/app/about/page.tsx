@@ -49,7 +49,7 @@ export default function AboutPage() {
 
               <Reveal direction="up" delay={0.2}>
                 <p className="text-base text-[var(--text-2)] leading-relaxed">
-                  I am a full-stack product engineer who ships robust software solutions from concept through production. As Mobile Lead for the CBC AI Platform at Bombay Softwares, I own the mobile application layer end to end for a production AI education platform used daily by Kenyan schools — architecture, design system, state management, API integration and Play Store release engineering — co-developed with a partner engineering team (1,000+ installs). Alongside collaborated platforms like Tuko Pamoja, I have independently designed, built, and deployed seven additional production systems across high-concurrency ticketing, offline-first POS, PropTech ledgers, native Android M-Pesa tracking, agricultural ERP, P2P networking, and civic transparency.
+                  I am a full-stack product engineer who ships robust software solutions from concept through production. As Mobile Lead for the CBC AI Platform at Bombay Softwares, I own the mobile application layer end to end for a production AI education platform used daily by Kenyan schools — architecture, design system, state management, API integration and Play Store release engineering — co-developed with a partner engineering team (1,000+ installs). Alongside collaborated platforms like Tuko Pamoja and Uongozi-254, I have independently designed, built, and deployed six additional production systems across high-concurrency ticketing, offline-first POS, PropTech ledgers, native Android M-Pesa tracking, agricultural ERP, and P2P networking.
                 </p>
               </Reveal>
             </section>
@@ -70,7 +70,7 @@ export default function AboutPage() {
               <Reveal direction="up" delay={0.2}>
                 <div className="flex flex-col gap-3 text-sm sm:text-base text-[var(--text-2)] leading-relaxed">
                   <p>
-                    My portfolio spans demanding engineering domains: high-concurrency seat locking and offline Ed25519 QR verification (TikitiPro); offline-first multi-tenant retail POS with UUIDv7 outbox sync and conflict resolution (DukaSync); double-entry fund accounting with 247 automated tests (Tuko Pamoja, partnered); 4-bucket atomic rental ledgers (KejaFlow); native Kotlin SMS interception with floating overlays (Kichele); an enterprise M-Pesa B2C payroll and tea estate ERP (TFMS); an offline P2P multiplayer card engine (Tuko Kadi); and a 47-county civic transparency platform (Uongozi-254).
+                    My portfolio spans demanding engineering domains: high-concurrency seat locking and offline Ed25519 QR verification (TikitiPro); offline-first multi-tenant retail POS with UUIDv7 outbox sync and conflict resolution (DukaSync); double-entry fund accounting with 247 automated tests (Tuko Pamoja, partnered); 4-bucket atomic rental ledgers (KejaFlow); native Kotlin SMS interception with floating overlays (Kichele); an enterprise M-Pesa B2C payroll and tea estate ERP (TFMS); an offline P2P multiplayer card engine (Tuko Kadi); and a 47-county civic transparency platform (Uongozi-254, partnered).
                   </p>
                   <p>
                     I bring a strong bias toward atomic financial integrity, zero-infrastructure architectures, and resilient systems built for low-connectivity, real-world East African environments.

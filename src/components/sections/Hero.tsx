@@ -63,10 +63,10 @@ export function Hero() {
             {/* ===== CONTENT SLOT: hero-paragraph ===== */}
             <Reveal direction="up" delay={0.3}>
               <p className="text-base sm:text-lg text-[var(--text-2)] max-w-xl leading-relaxed">
-                Co-architect of CBC AI (live in Kenyan schools with 1,000+ Play Store downloads) and Tuko Pamoja
-                (multi-tenant double-entry fund accounting). Solo-engineered 7 additional production systems spanning
-                high-concurrency ticketing, offline-first POS, PropTech ledgers, native Android M-Pesa tracking,
-                agricultural ERP, P2P gaming, and civic transparency.
+                Co-architect of CBC AI (live in Kenyan schools with 1,000+ Play Store downloads), Tuko Pamoja
+                (multi-tenant double-entry fund accounting), and Uongozi-254 (47-county civic transparency).
+                Solo-engineered 6 additional production systems spanning high-concurrency ticketing, offline-first POS,
+                PropTech ledgers, native Android M-Pesa tracking, agricultural ERP, and P2P gaming.
               </p>
             </Reveal>
           </div>
