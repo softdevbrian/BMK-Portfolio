@@ -6,6 +6,7 @@ export const site = {
   emailSecondary: "briankuriamaina@gmail.com",
   phonePrimary: "+254790408143",
   phoneSecondary: "+254716919124",
+  whatsapp: "254790408143",
   github: "https://github.com/softdevbrian",
   cv: "/Brian_Maina_Kuria_CV.pdf",
   recommendation: "/Brian_OAG_Recomendation.pdf",

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: `Get in touch with ${site.name} for engineering leadership, technical consultation, or project collaborations.`,
   openGraph: {
     title: `Contact | ${site.name}`,
-    description: `Connect directly with ${site.name} via email, phone, or direct inquiry form.`,
+    description: `Connect directly with ${site.name} via email, WhatsApp, phone, or direct inquiry form.`,
     images: ["/images/og.png"],
   },
 }
@@ -30,7 +30,7 @@ export default function ContactPage() {
           <Reveal direction="up" delay={0.15}>
             <p className="text-sm sm:text-base text-[var(--text-2)] max-w-2xl -mt-6 mb-8 leading-relaxed">
               I am currently open to Mobile Lead and Full-Stack Engineering roles, architectural consultations,
-              and select contract product builds. Send a message using the form below or reach out directly.
+              and select contract product builds. Send a message via Email or WhatsApp below, or reach out directly.
             </p>
           </Reveal>
         </div>
