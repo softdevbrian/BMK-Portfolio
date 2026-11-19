@@ -11,6 +11,7 @@ import { Reveal } from "@/components/fx/Reveal"
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder"
 import { Button } from "@/components/ui/Button"
 import { GithubIcon } from "@/components/ui/Icon"
+import { CopyableInline } from "@/components/ui/CopyableContact"
 import { motion } from "motion/react"
 
 const CvModal = dynamic(
@@ -108,13 +109,12 @@ export function Hero() {
                 <span className="font-mono">github.com/softdevbrian</span>
               </a>
 
-              <a
-                href={`mailto:${site.emailPrimary}`}
-                className="flex items-center gap-2 hover:text-[var(--accent-text)] transition-colors"
-              >
-                <Mail className="w-4 h-4 text-[var(--sky)]" />
-                <span className="font-mono">{site.emailPrimary}</span>
-              </a>
+              <CopyableInline
+                value={site.emailPrimary}
+                label="Primary Email"
+                icon={<Mail className="w-4 h-4 text-[var(--sky)]" />}
+                textClassName="font-mono"
+              />
 
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[var(--violet)]" />

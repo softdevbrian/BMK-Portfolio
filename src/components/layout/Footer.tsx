@@ -5,6 +5,7 @@ import { ArrowUp, Mail, Phone, MapPin } from "lucide-react"
 import { site } from "@/data/site"
 import { Reveal } from "@/components/fx/Reveal"
 import { GithubIcon } from "@/components/ui/Icon"
+import { CopyableInline } from "@/components/ui/CopyableContact"
 
 export function Footer() {
   const scrollToTop = () => {
@@ -67,22 +68,19 @@ export function Footer() {
               <span className="eyebrow">Connect</span>
               <ul className="flex flex-col gap-2.5 mt-3 text-sm text-[var(--text-2)]">
                 <li>
-                  <a
-                    href={`mailto:${site.emailPrimary}`}
-                    className="flex items-center gap-2 hover:text-[var(--accent-text)] transition-colors"
-                  >
-                    <Mail className="w-4 h-4 text-[var(--teal)] shrink-0" />
-                    <span className="truncate">{site.emailPrimary}</span>
-                  </a>
+                  <CopyableInline
+                    value={site.emailPrimary}
+                    label="Primary Email"
+                    icon={<Mail className="w-4 h-4 text-[var(--teal)]" />}
+                    className="max-w-full"
+                  />
                 </li>
                 <li>
-                  <a
-                    href={`tel:${site.phonePrimary}`}
-                    className="flex items-center gap-2 hover:text-[var(--accent-text)] transition-colors"
-                  >
-                    <Phone className="w-4 h-4 text-[var(--sky)] shrink-0" />
-                    <span>{site.phonePrimary}</span>
-                  </a>
+                  <CopyableInline
+                    value={site.phonePrimary}
+                    label="Primary Phone"
+                    icon={<Phone className="w-4 h-4 text-[var(--sky)]" />}
+                  />
                 </li>
                 <li>
                   <a
