@@ -28,7 +28,7 @@ interface FormErrors {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
-const WHATSAPP_TOPICS = [
+const QUICK_TOPICS = [
   "Project Inquiry",
   "Mobile / Full-Stack Role",
   "Technical Consultation",
@@ -422,64 +422,76 @@ export function ContactForm() {
           )}
         </div>
 
-        {/* Quick Topic Chips (WhatsApp mode) OR Subject Input (Email mode) */}
-        {isWhatsappMode ? (
-          <div className="flex flex-col gap-2">
-            <span className="text-xs font-mono font-medium text-[var(--text-2)] uppercase">
-              Quick Topic <span className="text-[var(--text-2)]/60 normal-case font-sans">(optional)</span>
-            </span>
-            <div className="flex flex-wrap gap-2">
-              {WHATSAPP_TOPICS.map((topic) => {
-                const selected = values.subject === topic
-                return (
-                  <button
-                    key={topic}
-                    type="button"
-                    onClick={() =>
-                      setValues((prev) => ({
+        {/* Subject / Topic Field + Quick Selection Chips (Available in both Email & WhatsApp modes) */}
+        <div className="flex flex-col gap-2.5">
+          <label htmlFor="subject" className="text-xs font-mono font-medium text-[var(--text-2)] uppercase">
+            {isWhatsappMode ? "Topic" : "Subject"}{" "}
+            {isWhatsappMode ? (
+              <span className="text-[var(--text-2)]/60 normal-case font-sans">(optional — pick or type)</span>
+            ) : (
+              <span className="text-[var(--teal)]">*</span>
+            )}
+          </label>
+
+          {/* Quick Topic Chips */}
+          <div className="flex flex-wrap gap-2">
+            {QUICK_TOPICS.map((topic) => {
+              const selected = values.subject === topic
+              return (
+                <button
+                  key={topic}
+                  type="button"
+                  onClick={() => {
+                    const nextTopic = selected ? "" : topic
+                    setValues((prev) => ({ ...prev, subject: nextTopic }))
+                    if (errors.subject) {
+                      setErrors((prev) => ({
                         ...prev,
-                        subject: prev.subject === topic ? "" : topic,
+                        subject: validateField("subject", nextTopic),
                       }))
                     }
-                    className={cn(
-                      "px-3 py-1.5 rounded-[var(--r-pill)] text-xs font-medium border transition-all duration-200 cursor-pointer",
-                      selected
+                  }}
+                  className={cn(
+                    "px-3 py-1.5 rounded-[var(--r-pill)] text-xs font-medium border transition-all duration-200 cursor-pointer",
+                    selected
+                      ? isWhatsappMode
                         ? "bg-[#25D366]/15 border-[#25D366] text-[#25D366]"
-                        : "bg-[var(--surface-2)] border-[var(--line)] text-[var(--text-2)] hover:border-[#25D366]/50 hover:text-[var(--text)]"
-                    )}
-                  >
-                    {topic}
-                  </button>
-                )
-              })}
-            </div>
+                        : "bg-[rgba(45,212,191,0.15)] border-[var(--teal)] text-[var(--teal)]"
+                      : isWhatsappMode
+                        ? "bg-[var(--surface-2)] border-[var(--line)] text-[var(--text-2)] hover:border-[#25D366]/50 hover:text-[var(--text)]"
+                        : "bg-[var(--surface-2)] border-[var(--line)] text-[var(--text-2)] hover:border-[var(--teal)]/50 hover:text-[var(--text)]"
+                  )}
+                >
+                  {topic}
+                </button>
+              )
+            })}
           </div>
-        ) : (
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="subject" className="text-xs font-mono font-medium text-[var(--text-2)] uppercase">
-              Subject <span className="text-[var(--teal)]">*</span>
-            </label>
-            <input
-              type="text"
-              id="subject"
-              name="subject"
-              required
-              placeholder="Project inquiry / Mobile Lead role / Technical consultation"
-              value={values.subject}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              aria-invalid={Boolean(errors.subject)}
-              aria-describedby={errors.subject ? "subject-error" : undefined}
-              className={inputClass(Boolean(errors.subject))}
-            />
-            {errors.subject && (
-              <p id="subject-error" className="text-xs text-[var(--danger)] flex items-center gap-1 mt-1">
-                <AlertCircle className="w-3 h-3 shrink-0" />
-                <span>{errors.subject}</span>
-              </p>
-            )}
-          </div>
-        )}
+
+          <input
+            type="text"
+            id="subject"
+            name="subject"
+            required={!isWhatsappMode}
+            placeholder={
+              isWhatsappMode
+                ? "Pick a quick topic above or type your own..."
+                : "Pick a quick topic above or type a custom subject..."
+            }
+            value={values.subject}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            aria-invalid={Boolean(errors.subject)}
+            aria-describedby={errors.subject ? "subject-error" : undefined}
+            className={inputClass(Boolean(errors.subject))}
+          />
+          {errors.subject && (
+            <p id="subject-error" className="text-xs text-[var(--danger)] flex items-center gap-1 mt-1">
+              <AlertCircle className="w-3 h-3 shrink-0" />
+              <span>{errors.subject}</span>
+            </p>
+          )}
+        </div>
 
         {/* Message Field */}
         <div className="flex flex-col gap-1.5">
