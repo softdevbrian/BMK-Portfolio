@@ -9,6 +9,7 @@ import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder"
 import { Badge } from "@/components/ui/Badge"
 import { SectionHeading } from "@/components/ui/SectionHeading"
 import { Button } from "@/components/ui/Button"
+import { ProjectLinksRow } from "@/components/ui/ProjectLinksRow"
 
 export function FeaturedProjects() {
   const featured = projects.filter((p) => p.featured)
@@ -121,12 +122,13 @@ export function FeaturedProjects() {
                       </Reveal>
                     )}
 
-                    {/* CTA Link */}
+                    {/* CTA Link + Direct Project Links */}
                     <Reveal direction="up" delay={0.4}>
-                      <div className="pt-2">
+                      <div className="pt-2 flex flex-wrap items-center gap-2.5">
                         <Button href={`/projects/${project.slug}`} variant="outline" size="sm">
                           Case Study & Details
                         </Button>
+                        <ProjectLinksRow links={project.links} variant="buttons" />
                       </div>
                     </Reveal>
                   </div>

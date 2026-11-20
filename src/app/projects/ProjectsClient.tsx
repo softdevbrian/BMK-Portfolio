@@ -9,6 +9,7 @@ import { TiltCard } from "@/components/fx/TiltCard"
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder"
 import { Badge } from "@/components/ui/Badge"
 import { Reveal } from "@/components/fx/Reveal"
+import { ProjectLinksRow } from "@/components/ui/ProjectLinksRow"
 import { cn } from "@/lib/cn"
 
 const FILTER_OPTIONS = [
@@ -85,44 +86,44 @@ export function ProjectsClient() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.35 }}
               >
-                <Link href={`/projects/${project.slug}`} className="block h-full group">
-                  <TiltCard className="p-4 bg-[var(--surface)] h-full flex flex-col justify-between">
-                    <div>
-                      {/* Cover Thumbnail */}
-                      <div className="relative rounded-[var(--r)] overflow-hidden mb-4">
-                        <ImagePlaceholder
-                          src={project.cover}
-                          alt={project.title}
-                          label={`${project.title} Preview`}
-                          aspect="video"
-                          className="group-hover:scale-[1.02] transition-transform duration-500"
-                        />
-                      </div>
-
-                      {/* Meta chips */}
-                      <div className="flex items-center justify-between gap-2 mb-2.5">
-                        <Badge variant={project.accent} size="sm">
-                          {project.ownership}
-                        </Badge>
-                        <span className="text-[11px] font-mono text-[var(--text-2)]">
-                          {project.period}
-                        </span>
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="text-xl font-bold font-heading text-[var(--text)] group-hover:text-[var(--accent-text)] transition-colors flex items-center justify-between">
-                        <span>{project.title}</span>
-                        <ArrowUpRight className="w-4 h-4 text-[var(--text-2)] group-hover:text-[var(--accent-text)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                      </h3>
-
-                      {/* Tagline */}
-                      <p className="text-xs sm:text-sm text-[var(--text-2)] line-clamp-2 mt-2 leading-relaxed">
-                        {project.tagline}
-                      </p>
+                <TiltCard className="p-4 bg-[var(--surface)] h-full flex flex-col justify-between">
+                  <Link href={`/projects/${project.slug}`} className="block group">
+                    {/* Cover Thumbnail */}
+                    <div className="relative rounded-[var(--r)] overflow-hidden mb-4">
+                      <ImagePlaceholder
+                        src={project.cover}
+                        alt={project.title}
+                        label={`${project.title} Preview`}
+                        aspect="video"
+                        className="group-hover:scale-[1.02] transition-transform duration-500"
+                      />
                     </div>
 
-                    {/* Stack preview */}
-                    <div className="pt-4 mt-4 border-t border-[var(--line)] flex flex-wrap gap-1.5">
+                    {/* Meta chips */}
+                    <div className="flex items-center justify-between gap-2 mb-2.5">
+                      <Badge variant={project.accent} size="sm">
+                        {project.ownership}
+                      </Badge>
+                      <span className="text-[11px] font-mono text-[var(--text-2)]">
+                        {project.period}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-xl font-bold font-heading text-[var(--text)] group-hover:text-[var(--accent-text)] transition-colors flex items-center justify-between">
+                      <span>{project.title}</span>
+                      <ArrowUpRight className="w-4 h-4 text-[var(--text-2)] group-hover:text-[var(--accent-text)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
+                    </h3>
+
+                    {/* Tagline */}
+                    <p className="text-xs sm:text-sm text-[var(--text-2)] line-clamp-2 mt-2 leading-relaxed">
+                      {project.tagline}
+                    </p>
+                  </Link>
+
+                  {/* Stack preview & Direct Project Links */}
+                  <div className="pt-4 mt-4 border-t border-[var(--line)] flex flex-wrap items-center justify-between gap-2.5">
+                    <div className="flex flex-wrap gap-1.5">
                       {project.stack
                         .flatMap((s) => s.items)
                         .slice(0, 4)
@@ -135,8 +136,10 @@ export function ProjectsClient() {
                           </span>
                         ))}
                     </div>
-                  </TiltCard>
-                </Link>
+
+                    <ProjectLinksRow links={project.links} variant="chips" />
+                  </div>
+                </TiltCard>
               </motion.div>
             ))}
           </AnimatePresence>
